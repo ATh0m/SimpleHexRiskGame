@@ -9,10 +9,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum Status { 
-	CREATE,
-	START,
-	REINFORCEMENT,
-	MOVE };
-	
+enum Status {
+    CREATE,
+    START,
+    REINFORCEMENT,
+    MOVE
+};
+
 #endif

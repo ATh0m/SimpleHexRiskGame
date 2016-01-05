@@ -7,8 +7,8 @@
 #include "board.h"
 #include "player.h"
 
-void draw(SDL_Renderer* renderer, Board* board);
+void draw(SDL_Renderer *renderer, Board *board);
 
-int main(int argc, char** argv);
+int main(int argc, char **argv);
 
 #endif

@@ -4,11 +4,11 @@
 #include "defs.h"
 
 typedef struct Color {
-	int r, g, b, a;
+    int r, g, b, a;
 } Color;
 
 typedef struct Pair {
-	int x, y;
+    int x, y;
 } Pair;
 
 Color create_color(int r, int g, int b, int a);
