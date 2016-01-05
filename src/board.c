@@ -39,11 +39,48 @@ Board *create_board(int cols, int rows, int tab[cols][rows]) {
     return new_board;
 }
 
+bool is_neighbour(int x1, int y1, int x2, int y2) {
+    int odd[6][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}};
+    int even[6][2] = {{-1, -1}, {0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}};
+
+    for (int i = 0; i < 6; i++) {
+        if (y1 % 2 == 0) {
+            if (x1 + even[i][0] == x2 && y1 + even[i][1] == y2) {
+                return true;
+            }
+        }
+        else {
+            if (x1 + odd[i][0] == x2 && y1 + odd[i][1] == y2) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 bool is_actionable(Board *board, int x, int y, Player *player, enum State state) {
     if (x >= 0 && x < board->width && y >= 0 && y < board->height && board->fields[x][y].owner >= 0) {
         if (state == START) {
             if (board->fields[x][y].owner == 0) {
                 return true;
+            }
+        }
+        if (state == REINFORCEMENT || state == MOVE) {
+            if (board->fields[x][y].owner == player->id) {
+                return true;
+            }
+        }
+        if (state == MOVE) {
+            PairItem *pair_item = player->fields_stack->top;
+
+            while (pair_item != NULL) {
+
+                if (is_neighbour(x, y, pair_item->pair.x, pair_item->pair.y)) {
+                    return true;
+                }
+
+                pair_item = pair_item->prev;
             }
         }
     }

@@ -31,6 +31,8 @@ Pair field_to_point(int x, int y, Board *board);
 
 Board *create_board(int cols, int rows, int tab[cols][rows]);
 
+bool is_neighbour(int x1, int y1, int x2, int y2);
+
 bool is_actionable(Board *board, int x, int y, Player *player, enum State state);
 
 void update_field_info(SDL_Renderer *renderer, Board *board);

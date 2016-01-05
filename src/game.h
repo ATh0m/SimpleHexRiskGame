@@ -9,8 +9,10 @@
 typedef struct Game {
     Board *board;
     Player **players;
+    int players_size;
 
-    int activ_player_index;
+    int active_player_index;
+    int active_players_amount;
 
     enum State state;
 
@@ -20,5 +22,7 @@ typedef struct Game {
 Game *create_game();
 
 void draw_game(SDL_Renderer *renderer, Game *game);
+
+void next_turn(Game *game) ;
 
 #endif //SIMPLEHEXRISKGAME_GAME_H

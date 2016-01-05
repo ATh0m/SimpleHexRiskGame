@@ -11,11 +11,13 @@ typedef struct Player {
 	bool active;
 	bool ai;
 
-	// TO DO List fields
+	PairStack *fields_stack;
 
 	Color field_color;
 	Color hover_color;
 	Color action_color;
+
+	int reinforcements;
 } Player;
 
 Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color, Color action_color);

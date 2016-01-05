@@ -12,6 +12,9 @@ Player *create_player(char *name, int id, bool active, bool ai, Color field_colo
     new_player->field_color = field_color;
     new_player->hover_color = hover_color;
     new_player->action_color = action_color;
+    new_player->reinforcements = 0;
+
+    new_player->fields_stack = create_pair_stack();
 
     return new_player;
 }
