@@ -26,7 +26,6 @@ void draw_filled_hex(SDL_Renderer *renderer, int x, int y, int size, Color color
     const short vx[6] = {x - size, x - size, x, x + size, x + size, x};
     const short vy[6] = {y + size * 0.5, y - size * 0.5, y - size, y - size * 0.5, y + size * 0.5, y + size};
 
-    //filledPolygonRGBA( renderer, vx, vy, 6, 128, 128, 128, 255 );
     filledPolygonRGBA(renderer, vx, vy, 6, color.r, color.g, color.b, color.a);
 }
 
@@ -38,7 +37,6 @@ void draw_hex(SDL_Renderer *renderer, int x, int y, int size, Color color) {
     short last_y = vy[5];
 
     for (int i = 0; i < 6; i++) {
-        // thickLineRGBA (renderer, last_x, last_y, vx[i], vy[i], 5, 255, 51, 51, 255);
         thickLineRGBA(renderer, last_x, last_y, vx[i], vy[i], 5, color.r, color.g, color.b, color.a);
 
         last_x = vx[i];

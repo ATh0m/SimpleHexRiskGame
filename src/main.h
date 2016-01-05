@@ -1,13 +1,13 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef SIMPLEHEXRISKGAME_MAIN_H
+#define SIMPLEHEXRISKGAME_MAIN_H
 
 #include "defs.h"
 #include "utility.h"
 #include "graphic.h"
 #include "board.h"
 #include "player.h"
-
-void draw(SDL_Renderer *renderer, Board *board);
+#include "game.h"
+#include "input.h"
 
 int main(int argc, char **argv);
 

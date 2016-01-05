@@ -1,5 +1,5 @@
-#ifndef GRAPHIC_H
-#define GRAPHIC_H
+#ifndef SIMPLEHEXRISKGAME_GRAPHIC_H
+#define SIMPLEHEXRISKGAME_GRAPHIC_H
 
 #include "defs.h"
 #include "utility.h"

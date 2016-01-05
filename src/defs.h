@@ -1,5 +1,5 @@
-#ifndef DEFS_H
-#define DEFS_H
+#ifndef SIMPLEHEXRISKGAME_DEFS_H
+#define SIMPLEHEXRISKGAME_DEFS_H
 
 #include <math.h>
 #include <SDL2/SDL.h>
@@ -9,11 +9,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum Status {
+
+
+enum State {
     CREATE,
     START,
     REINFORCEMENT,
-    MOVE
+    MOVE,
+    WIN
 };
 
 #endif

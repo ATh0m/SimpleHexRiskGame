@@ -1,5 +1,5 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef SIMPLEHEXRISKGAME_BOARD_H
+#define SIMPLEHEXRISKGAME_BOARD_H
 
 #include "defs.h"
 #include "utility.h"
@@ -22,8 +22,6 @@ typedef struct Board {
     int offset_x;
     int offset_y;
 
-    enum Status status;
-
     Pair hover_field;
 } Board;
 
@@ -33,8 +31,8 @@ Pair field_to_point(int x, int y, Board *board);
 
 Board *create_board(int cols, int rows, int tab[cols][rows]);
 
-bool is_actionable(Board *board, int x, int y, Player *player);
+bool is_actionable(Board *board, int x, int y, Player *player, enum State state);
 
-void draw_board(SDL_Renderer *renderer, Board *board);
+void update_field_info(SDL_Renderer *renderer, Board *board);
 
 #endif

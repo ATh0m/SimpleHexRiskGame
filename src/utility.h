@@ -1,5 +1,5 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef SIMPLEHEXRISKGAME_UTILITY_H
+#define SIMPLEHEXRISKGAME_UTILITY_H
 
 #include "defs.h"
 
@@ -12,5 +12,7 @@ typedef struct Pair {
 } Pair;
 
 Color create_color(int r, int g, int b, int a);
+
+Pair create_pair(int x, int y);
 
 #endif
