@@ -1,10 +1,12 @@
-# SimpleHexRiskaGame
+# SimpleHexRiskGame
 
 ------
 
 ## OPIS:
 
 Jest to prosta gra strategiczna opierająca się na zasadach gry ***"Ryzyko"*** i planszą złożoną z sześcioboków. Graczami mogą być ludzie jak i komputer.
+
+![Wstępna wersja](https://raw.githubusercontent.com/AThom0x7cc/SimpleHexRiskGame/master/screen.png)
 
 ------
 
@@ -135,4 +137,5 @@ Gra będzie wykorzystywać bibliotekę [SDL2](https://www.libsdl.org/index.php).
 
 
 ------
+Tomasz Nanowski
 
