@@ -94,7 +94,6 @@ void mouse_down_event(SDL_Event event, Game *game) {
 
             int defense_power = field->force;
 
-//            TODO Simulate dices roll
             Pair result = battle(attack_power, defense_power);
 
             attack_power = result.x;
@@ -119,7 +118,10 @@ void mouse_down_event(SDL_Event event, Game *game) {
                         }
                     }
 
-                    if (won) printf("WIN\n");
+                    if (won) {
+                        printf("WIN\n");
+                        game->state = WIN;
+                    }
                 }
             }
             else {

@@ -23,6 +23,8 @@ Game *create_game() {
     new_game->active_player_index = rand() % new_game->players_size;
     new_game->active_players_amount = new_game->players_size;
 
+    new_game->state = CREATE;
+
     return new_game;
 }
 
@@ -31,6 +33,7 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
     SDL_RenderClear(renderer);
 
     update_field_info(renderer, game->board);
+    Player *player = game->players[game->active_player_index];
 
     for (int x = 0; x < game->board->width; x++) {
         for (int y = 0; y < game->board->height; y++) {
@@ -40,8 +43,6 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
 
                 Pair point = field_to_point(x, y, game->board);
                 draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, filed_color);
-
-                Player *player = game->players[game->active_player_index];
 
                 Color hover_color = player->hover_color;
                 Color action_color = player->action_color;
@@ -56,10 +57,29 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
                 if (game->board->fields[x][y].owner > 0) {
                     char force[10];
                     sprintf(force, "%d", game->board->fields[x][y].force);
-                    stringRGBA(renderer, point.x, point.y, force, 0, 0, 0, 255);
+                    display_text(renderer, force, create_color(255, 255, 255, 255), point.x, point.y);
                 }
             }
         }
+    }
+
+    char message[200];
+
+    switch (game->state) {
+        case START:
+            sprintf(message, "Gracz %s wybiersz swoje startowe pole", player->name);
+            display_text(renderer, message, player->action_color, 320, 420);
+            break;
+        case REINFORCEMENT:
+            sprintf(message, "Gracz %s rozstaw swoje sily. Pozostalo %d", player->name, player->reinforcements);
+            display_text(renderer, message, player->action_color, 320, 420);
+            break;
+        case MOVE:
+            sprintf(message, "Gracz %s wykonaj ruch", player->name);
+            display_text(renderer, message, player->action_color, 320, 420);
+            break;
+        default:
+            break;
     }
 
     SDL_RenderPresent(renderer);

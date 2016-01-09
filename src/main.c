@@ -4,6 +4,9 @@ int main(int argc, char **argv) {
 
     srand(time(NULL));
 
+    SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
+
     SDL_Window *window = create_window(640, 480);
     SDL_Renderer *renderer = crete_renderer(window);
 
