@@ -14,6 +14,10 @@ int max (int a, int b) {
     return a > b ? a : b;
 }
 
+int min (int a, int b) {
+    return a < b ? a : b;
+}
+
 PairItem *create_pair_item(Pair pair, PairItem *prev) {
     PairItem *new_pair_item = malloc(sizeof(PairItem));
 

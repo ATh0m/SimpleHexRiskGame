@@ -16,6 +16,7 @@ Color create_color(int r, int g, int b, int a);
 Pair create_pair(int x, int y);
 
 int max (int a, int b);
+int min (int a, int b);
 
 typedef struct PairItem {
     Pair pair;

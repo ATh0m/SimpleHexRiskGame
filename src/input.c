@@ -95,12 +95,10 @@ void mouse_down_event(SDL_Event event, Game *game) {
             int defense_power = field->force;
 
 //            TODO Simulate dices roll
+            Pair result = battle(attack_power, defense_power);
 
-            int temp_attack_power = attack_power;
-            int temp_defense_power = defense_power;
-
-            attack_power -= temp_defense_power;
-            defense_power -= temp_attack_power;
+            attack_power = result.x;
+            defense_power = result.y;
 
             if (attack_power > 0) {
                 Player *opponent = game->players[field->owner-1];

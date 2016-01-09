@@ -5,6 +5,7 @@
 #include "game.h"
 #include "board.h"
 #include "player.h"
+#include "battle.h"
 
 bool read_events(Game *game);
 
