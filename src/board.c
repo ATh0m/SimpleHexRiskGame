@@ -116,7 +116,7 @@ bool has_neighbour(int x, int y, enum Race race, Board *board) {
                 if (board->fields[X][Y].owner == 0) return true;
                 break;
             case ENEMY:
-                if (board->fields[X][Y].owner != board->fields[x][y].owner) return true;
+                if (board->fields[X][Y].owner > 0 && board->fields[X][Y].owner != board->fields[x][y].owner) return true;
                 break;
             case ALLY:
                 if (board->fields[X][Y].owner == board->fields[x][y].owner) return true;

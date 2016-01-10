@@ -51,8 +51,7 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
                 Color action_color = player->action_color;
 
                 if (is_actionable(game->board, x, y, player, game->state)) {
-                    if (game->board->hover_field != NULL) {
-//                        printf("%d %d\n", game->board->hover_field->x, game->board->hover_field->y);
+                    if (!player->ai && game->board->hover_field != NULL) {
                         if (x == game->board->hover_field->x && y == game->board->hover_field->y) {
                             draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, hover_color);
                         }

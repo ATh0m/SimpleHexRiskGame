@@ -69,7 +69,9 @@ bool ai_start(Player *player, Board *board) {
 
 void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals) {
     Field *field;
-    if ((fields_adjacent_enemies->size > 0 && (rand() / (double)RAND_MAX) < 0.5) || fields_adjacent_neutrals->size == 0) {
+
+    if ((fields_adjacent_enemies->size > 0 && (rand() / (double) RAND_MAX) < 0.75) ||
+        fields_adjacent_neutrals->size == 0) {
 
         field = random_field(fields_adjacent_enemies, board);
         player_reinforcement(player, field, state);
