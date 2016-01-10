@@ -1,5 +1,26 @@
 #include "graphic.h"
 
+Graphic *create_graphic(int width, int height) {
+
+    Graphic *new_graphic = malloc(sizeof(Graphic));
+
+    new_graphic->window = create_window(width, height);
+    new_graphic->renderer = create_renderer(new_graphic->window);
+
+    if (new_graphic == NULL || new_graphic->window == NULL || new_graphic->renderer == NULL) {
+        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        exit(0);
+    }
+
+    update_graphic_size(new_graphic);
+
+    return new_graphic;
+}
+
+void update_graphic_size(Graphic *graphic) {
+    SDL_GetWindowSize(graphic->window, &graphic->width, &graphic->height);
+}
+
 SDL_Window *create_window(int width, int height) {
     SDL_Window *window = NULL;
 
@@ -11,12 +32,19 @@ SDL_Window *create_window(int width, int height) {
             SDL_WINDOWPOS_UNDEFINED,
             width,
             height,
-            SDL_WINDOW_SHOWN);
+            SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
+    //SDL_WINDOW_RESIZABLE
+
+    if( window == NULL ) {
+        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        exit(0);
+    }
 
     return window;
 }
 
-SDL_Renderer *crete_renderer(SDL_Window *window) {
+SDL_Renderer *create_renderer(SDL_Window *window) {
     SDL_Renderer *renderer = NULL;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 

@@ -1,12 +1,24 @@
 #include "board.h"
 
-Pair point_to_field(int x, int y, Board *board) {
-    Pair field;
+Pair point_to_pair(int x, int y, Board *board) {
+    Pair pair;
 
-    field.y = floor((y - board->offset_y) / board->field_height);
-    field.x = floor(((field.y % 2 == 0 ? x : x - board->field_size) - board->offset_x) / board->field_width);
+    pair.y = floor((y - board->offset_y) / board->field_height);
+    pair.x = floor(((pair.y % 2 == 0 ? x : x - board->field_size) - board->offset_x) / board->field_width);
 
+    return pair;
+}
+
+Field *pair_to_field(Pair pair, Board *board) {
+    if (pair.x < 0 || pair.y < 0 || pair.x >= board->width || pair.y >= board->height) {
+        return NULL;
+    }
+    Field *field = &board->fields[pair.x][pair.y];
     return field;
+}
+
+Field *point_to_field(int x, int y, Board *board) {
+    return pair_to_field(point_to_pair(x, y, board), board);
 }
 
 Pair field_to_point(int x, int y, Board *board) {
@@ -17,6 +29,23 @@ Pair field_to_point(int x, int y, Board *board) {
               board->offset_x;
 
     return point;
+}
+
+Pair field_to_pair(Field *field) {
+    Pair pair = {field->x, field->y};
+    return pair;
+}
+
+Field *random_field(PairStack *pair_stack, Board *board) {
+    Field *field;
+
+    PairItem *pair_item = pair_stack->top;
+    for (int i = 0; i < rand() % pair_stack->size; i++) {
+        pair_item = pair_item->prev;
+    }
+
+    field = pair_to_field(pair_item->pair, board);
+    return field;
 }
 
 Board *create_board(int cols, int rows, int tab[cols][rows]) {
@@ -33,8 +62,13 @@ Board *create_board(int cols, int rows, int tab[cols][rows]) {
         for (int y = 0; y < new_board->height; y++) {
             new_board->fields[x][y].force = 0;
             new_board->fields[x][y].owner = tab[x][y] == 1 ? 0 : -1;
+
+            new_board->fields[x][y].x = x;
+            new_board->fields[x][y].y = y;
         }
     }
+
+    new_board->hover_field = NULL;
 
     return new_board;
 }
@@ -59,29 +93,36 @@ bool is_neighbour(int x1, int y1, int x2, int y2) {
     return false;
 }
 
-bool is_actionable(Board *board, int x, int y, Player *player, enum State state) {
-    if (x >= 0 && x < board->width && y >= 0 && y < board->height && board->fields[x][y].owner >= 0) {
-        if (state == START) {
-            if (board->fields[x][y].owner == 0) {
-                return true;
-            }
+bool has_neighbour(int x, int y, enum Race race, Board *board) {
+    int odd[6][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}};
+    int even[6][2] = {{-1, -1}, {0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}};
+
+    int X, Y;
+
+    for (int i = 0; i < 6; i++) {
+        if(y % 2 == 0) {
+            X = x + even[i][0];
+            Y = y + even[i][1];
         }
-        if (state == REINFORCEMENT || state == MOVE) {
-            if (board->fields[x][y].owner == player->id) {
-                return true;
-            }
+        else {
+            X = x + odd[i][0];
+            Y = y + odd[i][1];
         }
-        if (state == MOVE) {
-            PairItem *pair_item = player->fields_stack->top;
 
-            while (pair_item != NULL) {
+        if (X < 0 || X >= board->width || Y < 0 || Y >= board->height) continue;
 
-                if (is_neighbour(x, y, pair_item->pair.x, pair_item->pair.y)) {
-                    return true;
-                }
-
-                pair_item = pair_item->prev;
-            }
+        switch (race) {
+            case NEUTRAL:
+                if (board->fields[X][Y].owner == 0) return true;
+                break;
+            case ENEMY:
+                if (board->fields[X][Y].owner != board->fields[x][y].owner) return true;
+                break;
+            case ALLY:
+                if (board->fields[X][Y].owner == board->fields[x][y].owner) return true;
+                break;
+            default:
+                break;
         }
     }
 

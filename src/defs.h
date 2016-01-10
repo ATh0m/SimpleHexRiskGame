@@ -21,4 +21,10 @@ enum State {
     WIN
 };
 
+enum Race {
+    NEUTRAL,
+    ENEMY,
+    ALLY
+};
+
 #endif

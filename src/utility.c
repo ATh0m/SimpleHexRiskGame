@@ -10,6 +10,16 @@ Pair create_pair(int x, int y) {
     return new_pair;
 }
 
+Triple create_triple(int x, int y, int z) {
+    Triple new_triple;
+
+    new_triple.x = x;
+    new_triple.y = y;
+    new_triple.z = z;
+
+    return new_triple;
+}
+
 int max (int a, int b) {
     return a > b ? a : b;
 }
@@ -61,4 +71,26 @@ void erase(PairStack *pair_stack, Pair pair) {
         last = pair_item;
         pair_item = pair_item->prev;
     }
+}
+
+void clear(PairStack *pair_stack) {
+    PairItem *pair_item = pair_stack->top;
+    PairItem *temp_pair_item;
+
+    while (pair_item != NULL) {
+        temp_pair_item = pair_item;
+        pair_item = pair_item->prev;
+        free(temp_pair_item);
+    }
+    free(pair_stack);
+}
+
+void print_stack(PairStack *pair_stack) {
+    PairItem *pair_item = pair_stack->top;
+    printf("\n");
+    while (pair_item != NULL) {
+        printf("(%d %d), ", pair_item->pair.x, pair_item->pair.y);
+        pair_item = pair_item->prev;
+    }
+    printf("\n");
 }

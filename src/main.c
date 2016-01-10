@@ -7,25 +7,30 @@ int main(int argc, char **argv) {
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
 
-    SDL_Window *window = create_window(640, 480);
-    SDL_Renderer *renderer = crete_renderer(window);
+    Graphic *graphic = create_graphic(960, 900);
 
-    int quit = false;
-
-    Game *game = create_game();
+    Game *game = create_game(graphic);
 
     game->state = START;
+
+    next_turn(game);
+
+    int quit = false;
 
     while (!quit) {
 
         quit = read_events(game);
 
-        draw_game(renderer, game);
+        if (game->players->list[game->players->active_player_index]->ai) {
+            if (ai_action(game->players->list[game->players->active_player_index], game->board, game->players, &game->state)) next_turn(game);
+        }
+
+        draw_game(graphic->renderer, game);
 
         SDL_Delay(16);
     }
 
-    SDL_DestroyWindow(window);
+    SDL_DestroyWindow(graphic->window);
     SDL_Quit();
 
     return EXIT_SUCCESS;

@@ -5,21 +5,22 @@
 #include "utility.h"
 #include "board.h"
 #include "player.h"
+#include "ai.h"
+#include "graphic.h"
 
 typedef struct Game {
     Board *board;
-    Player **players;
-    int players_size;
 
-    int active_player_index;
-    int active_players_amount;
+    Players *players;
 
     enum State state;
+
+    Graphic *graphic;
 
     Color backgroun_color;
 } Game;
 
-Game *create_game();
+Game *create_game(Graphic *graphic);
 
 void draw_game(SDL_Renderer *renderer, Game *game);
 
