@@ -7,6 +7,7 @@
 #include "player.h"
 #include "ai.h"
 #include "graphic.h"
+#include "generator.h"
 
 typedef struct Game {
     Board *board;

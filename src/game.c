@@ -5,16 +5,16 @@ Game *create_game(Graphic *graphic) {
     Game *new_game = malloc(sizeof(Game));
     new_game->graphic = graphic;
 
-    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
-                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
-                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
-                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
-                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
+//    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+//                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
+//                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
+//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+//                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
+//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
 
 //    int tab [5][5] = { {1, 1, 1, 1, 1},
 //                       {1, 1, 1, 1, 1},
@@ -29,7 +29,15 @@ Game *create_game(Graphic *graphic) {
 //    int tab[2][2] = { {1, 1},
 //                      {1, 1} };
 
-    new_game->board = create_board(10, 11, tab);
+    int width = rand() % 5 + 7;
+    int height = rand() % 5 + 7;
+
+    int **tab = generate_fileds_tab(width, height);
+
+    new_game->board = create_board(width, height, tab);
+
+    delete_generated_fields_tab(tab, width, height);
+
     update_field_info(new_game->graphic->renderer, new_game->board);
 
     new_game->backgroun_color = create_color(0, 0, 0, 255);
@@ -55,18 +63,25 @@ void reset_game(Game *game) {
     delete_board(game->board);
     game->board = NULL;
 
-    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                        {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-                        {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
-                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                        {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
-                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
-                        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
-                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
+//    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+//                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//                        {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
+//                        {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
+//                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                        {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+//                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+//                        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
+//                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
 
-    game->board = create_board(10, 11, tab);
+    int width = rand() % 5 + 7;
+    int height = rand() % 5 + 7;
+
+    int **tab = generate_fileds_tab(width, height);
+
+    game->board = create_board(width, height, tab);
+
+    delete_generated_fields_tab(tab, width, height);
 }
 
 void draw_game(SDL_Renderer *renderer, Game *game) {
@@ -122,7 +137,7 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
                     if (game->board->fields[x][y].owner > 0) {
                         char force[10];
                         sprintf(force, "%d", game->board->fields[x][y].force);
-                        display_text(renderer, force, create_color(255, 255, 255, 255), point.x, point.y, font_default);
+                        display_text(renderer, force, create_color(0, 0, 0, 255), point.x, point.y, font_default);
                     }
                 }
             }

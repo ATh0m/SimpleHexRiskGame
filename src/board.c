@@ -51,7 +51,7 @@ Field *random_field(PairStack *pair_stack, Board *board) {
     return field;
 }
 
-Board *create_board(int cols, int rows, int tab[cols][rows]) {
+Board *create_board(int cols, int rows, int **tab) {
     Board *new_board = malloc(sizeof(Board));
 
     new_board->fields = malloc(cols * sizeof(*new_board->fields));

@@ -18,6 +18,6 @@ set(SOURCE_FILES
     src/player.c
     src/player.h
     src/utility.c
-    src/utility.h src/game.c src/game.h src/battle.c src/battle.h src/ai.c src/ai.h)
+    src/utility.h src/game.c src/game.h src/battle.c src/battle.h src/ai.c src/ai.h src/generator.c src/generator.h)
 
 add_executable(SimpleHexRiskGame ${SOURCE_FILES})
