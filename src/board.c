@@ -37,6 +37,9 @@ Pair field_to_pair(Field *field) {
 }
 
 Field *random_field(PairStack *pair_stack, Board *board) {
+
+    if (pair_stack->size == 0) return NULL;
+
     Field *field;
 
     PairItem *pair_item = pair_stack->top;
@@ -132,11 +135,12 @@ bool has_neighbour(int x, int y, enum Race race, Board *board) {
 void update_field_info(SDL_Renderer *renderer, Board *board) {
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
-    board->field_size = w / (2 * (0.5 + board->width));
+    board->field_size = min(w / (2 * (0.5 + board->width)), 50);
 
     board->field_width = board->field_size * 2;
     board->field_height = board->field_width * 0.75;
 
     board->offset_x = (w - board->width * board->field_width - board->field_width * 0.5) * 0.5;
-    board->offset_y = board->field_width * 0.125;
+    board->offset_y = board->field_width * 0.5;
+
 }

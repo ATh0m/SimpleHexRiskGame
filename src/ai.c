@@ -59,7 +59,7 @@ bool ai_start(Player *player, Board *board) {
         y = rand() % board->height;
 
         if (board->fields[x][y].owner == 0) {
-            if (!has_neighbour(x, y, ENEMY, board)) {
+            if (!has_neighbour(x, y, ENEMY, board) || true) {
                 player_start(player, pair_to_field(create_pair(x, y), board));
                 return true;
             }

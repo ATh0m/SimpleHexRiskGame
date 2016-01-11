@@ -23,6 +23,6 @@ void draw_filled_hex(SDL_Renderer *renderer, int x, int y, int size, Color color
 
 void draw_hex(SDL_Renderer *renderer, int x, int y, int size, Color color);
 
-void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y);
+void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y, TTF_Font *font);
 
 #endif

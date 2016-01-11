@@ -20,27 +20,44 @@ bool read_events(Game *game) {
         }
     }
 
+    if (game->state != CREATE && game->state != WIN) {
+        if (game->players->list[game->players->active_player_index]->ai) {
+            if (ai_action(game->players->list[game->players->active_player_index], game->board, game->players,
+                          &game->state))
+                next_turn(game);
+        }
+    }
+
     return false;
 }
 
 void mouse_move_event(SDL_Event event, Game *game) {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    game->board->hover_field = point_to_field(x, y, game->board);
+    if (game->state != CREATE && game->state != WIN) {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        game->board->hover_field = point_to_field(x, y, game->board);
+    }
 }
 
 void mouse_down_event(SDL_Event event, Game *game) {
     int x, y;
     SDL_GetMouseState(&x, &y);
-    game->board->hover_field = point_to_field(x, y, game->board);
 
-    Player *player = game->players->list[game->players->active_player_index];
+    if (game->state != CREATE && game->state != WIN) {
 
-    if (game->board->hover_field == NULL || !is_actionable(game->board, game->board->hover_field->x, game->board->hover_field->y, player, game->state)) {
-        return ;
+        game->board->hover_field = point_to_field(x, y, game->board);
+
+        Player *player = game->players->list[game->players->active_player_index];
+
+        if (game->board->hover_field == NULL ||
+            !is_actionable(game->board, game->board->hover_field->x, game->board->hover_field->y, player,
+                           game->state)) {
+            return;
+        }
+
+        Field *field = &game->board->fields[game->board->hover_field->x][game->board->hover_field->y];
+
+        if (player_action(player, field, game->board, &game->state, game->players)) next_turn(game);
+
     }
-
-    Field *field = &game->board->fields[game->board->hover_field->x][game->board->hover_field->y];
-
-    if (player_action(player, field, game->board, &game->state, game->players)) next_turn(game);
 }

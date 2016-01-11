@@ -11,7 +11,11 @@
 #include <string.h>
 #include <time.h>
 
-TTF_Font* font;
+TTF_Font *font_default;
+TTF_Font *font_header;
+TTF_Font *font_small;
+TTF_Font *font_field;
+TTF_Font *font_description;
 
 enum State {
     CREATE,

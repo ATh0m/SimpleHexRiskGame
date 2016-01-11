@@ -24,7 +24,9 @@ void update_graphic_size(Graphic *graphic) {
 SDL_Window *create_window(int width, int height) {
     SDL_Window *window = NULL;
 
-    font = TTF_OpenFont("../src/font/Ubuntu-M.ttf", 20);
+    font_default = TTF_OpenFont("../src/font/Ubuntu-M.ttf", 20);
+    font_header = TTF_OpenFont("../src/font/Ubuntu-M.ttf", 30);
+    font_small = TTF_OpenFont("../src/font/Ubuntu-M.ttf", 13);
 
     window = SDL_CreateWindow(
             "SimpleHexRiskGame",
@@ -74,7 +76,7 @@ void draw_hex(SDL_Renderer *renderer, int x, int y, int size, Color color) {
     }
 }
 
-void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y) {
+void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y, TTF_Font *font) {
 
     SDL_Color sdl_color = {color.r, color.g, color.b};
 

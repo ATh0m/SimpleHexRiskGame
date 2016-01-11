@@ -5,18 +5,28 @@ Game *create_game(Graphic *graphic) {
     Game *new_game = malloc(sizeof(Game));
     new_game->graphic = graphic;
 
-    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
-                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
-                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
-                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
-                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
+//    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+//                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
+//                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
+//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+//                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
+//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
 
-    new_game->board = create_board(10, 11, tab);
+//    int tab [5][5] = { {1, 1, 1, 1, 1},
+//                       {1, 1, 1, 1, 1},
+//                       {1, 1, 1, 1, 1},
+//                       {1, 1, 1, 1, 1},
+//                       {1, 1, 1, 1, 1} };
+
+    int tab[3][3] = { {1, 1, 1},
+                      {1, 1, 1},
+                      {1, 1, 1} };
+
+    new_game->board = create_board(3, 3, tab);
     update_field_info(new_game->graphic->renderer, new_game->board);
 
     new_game->players = create_players();
@@ -35,56 +45,87 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
     SDL_SetRenderDrawColor(renderer, game->backgroun_color.r, game->backgroun_color.g, game->backgroun_color.b, game->backgroun_color.a);
     SDL_RenderClear(renderer);
 
-    update_field_info(renderer, game->board);
-    Player *player = game->players->list[game->players->active_player_index];
+    update_graphic_size(game->graphic);
 
-    for (int x = 0; x < game->board->width; x++) {
-        for (int y = 0; y < game->board->height; y++) {
-            if (game->board->fields[x][y].owner >= 0) {
+    if (game->state == CREATE) {
+        display_text(renderer, "SIMPLEHEXRISKGAME", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-130, font_header);
+        display_text(renderer, "Jest to prosta gra strategiczna podobna do Ryzyko. Twoim celem jest wyeliminowanie pozostalych wrogow.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-70, font_small);
+        display_text(renderer, "Przejmuj neutralne i wrogie tereny, aby zwiekszac swoja sile", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-50, font_small);
+        display_text(renderer, "Kiedy przejmiesz pusty teren jego sila bedzie wynosila polowe sily sasiednich, przyjaznych terenow.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-30, font_small);
+        display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie polowe sily sasiednich, przyjaznych pol.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-10, font_small);
 
-                Color filed_color = game->board->fields[x][y].owner == 0 ? create_color(128, 128, 128, 255) : game->players->list[game->board->fields[x][y].owner-1]->field_color;
+        display_text(renderer, "Wybierz liczbe graczy, ktorzy wezma udzial w potyczce.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+50, font_small);
+        display_text(renderer, "Nad reszta kontrole przejmie komputer.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+70, font_small);
 
-                Pair point = field_to_point(x, y, game->board);
-                draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, filed_color);
+        display_text(renderer, "0", create_color(128, 128, 128, 255), game->graphic->width/2 - 150, game->graphic->height/2+130, font_header);
+        display_text(renderer, "1", create_color(128, 128, 128, 255), game->graphic->width/2 - 75, game->graphic->height/2+130, font_header);
+        display_text(renderer, "2", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+130, font_header);
+        display_text(renderer, "3", create_color(128, 128, 128, 255), game->graphic->width/2 + 75, game->graphic->height/2+130, font_header);
+        display_text(renderer, "4", create_color(128, 128, 128, 255), game->graphic->width/2 + 150, game->graphic->height/2+130, font_header);
+    }
+    else if (game->state == WIN) {
 
-                Color hover_color = player->hover_color;
-                Color action_color = player->action_color;
+    }
+    else {
 
-                if (is_actionable(game->board, x, y, player, game->state)) {
-                    if (!player->ai && game->board->hover_field != NULL) {
-                        if (x == game->board->hover_field->x && y == game->board->hover_field->y) {
-                            draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, hover_color);
+
+        update_field_info(renderer, game->board);
+        Player *player = game->players->list[game->players->active_player_index];
+
+        for (int x = 0; x < game->board->width; x++) {
+            for (int y = 0; y < game->board->height; y++) {
+                if (game->board->fields[x][y].owner >= 0) {
+
+                    Color filed_color = game->board->fields[x][y].owner == 0 ? create_color(128, 128, 128, 255)
+                                                                             : game->players->list[
+                                                game->board->fields[x][y].owner - 1]->field_color;
+
+                    Pair point = field_to_point(x, y, game->board);
+                    draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, filed_color);
+
+                    Color hover_color = player->hover_color;
+                    Color action_color = player->action_color;
+
+                    if (is_actionable(game->board, x, y, player, game->state)) {
+                        if (!player->ai && game->board->hover_field != NULL) {
+                            if (x == game->board->hover_field->x && y == game->board->hover_field->y) {
+                                draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, hover_color);
+                            }
                         }
+                        draw_hex(renderer, point.x, point.y, game->board->field_size, action_color);
                     }
-                    draw_hex(renderer, point.x, point.y, game->board->field_size, action_color);
-                }
 
-                if (game->board->fields[x][y].owner > 0) {
-                    char force[10];
-                    sprintf(force, "%d", game->board->fields[x][y].force);
-                    display_text(renderer, force, create_color(255, 255, 255, 255), point.x, point.y);
+                    if (game->board->fields[x][y].owner > 0) {
+                        char force[10];
+                        sprintf(force, "%d", game->board->fields[x][y].force);
+                        display_text(renderer, force, create_color(255, 255, 255, 255), point.x, point.y, font_default);
+                    }
                 }
             }
         }
-    }
 
-    char message[200];
+        char message[200];
 
-    switch (game->state) {
-        case START:
-            sprintf(message, "Gracz %s wybiersz swoje startowe pole", player->name);
-            display_text(renderer, message, player->action_color, 480, 860);
-            break;
-        case REINFORCEMENT:
-            sprintf(message, "Gracz %s rozstaw swoje sily. Pozostalo %d", player->name, player->reinforcements);
-            display_text(renderer, message, player->action_color, 480, 860);
-            break;
-        case MOVE:
-            sprintf(message, "Gracz %s wykonaj ruch", player->name);
-            display_text(renderer, message, player->action_color, 480, 860);
-            break;
-        default:
-            break;
+        switch (game->state) {
+            case START:
+                sprintf(message, "Gracz %s wybiersz swoje startowe pole", player->name);
+                display_text(renderer, message, player->action_color, game->graphic->width / 2,
+                             game->graphic->height - 30, font_default);
+                break;
+            case REINFORCEMENT:
+                sprintf(message, "Gracz %s rozstaw swoje sily. Pozostalo %d", player->name, player->reinforcements);
+                display_text(renderer, message, player->action_color, game->graphic->width / 2,
+                             game->graphic->height - 30, font_default);
+                break;
+            case MOVE:
+                sprintf(message, "Gracz %s wykonaj ruch", player->name);
+                display_text(renderer, message, player->action_color, game->graphic->width / 2,
+                             game->graphic->height - 30, font_default);
+                break;
+            default:
+                break;
+        }
+
     }
 
     SDL_RenderPresent(renderer);
