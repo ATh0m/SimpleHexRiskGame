@@ -23,6 +23,7 @@ typedef struct Player {
 } Player;
 
 Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color, Color action_color);
+void delete_player(Player *player);
 
 typedef struct Players {
     Player **list;
@@ -35,7 +36,8 @@ typedef struct Players {
 
 } Players;
 
-Players *create_players();
+Players *create_players(int players_amount);
+void delete_players(Players *players);
 
 bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players);
 bool player_start(Player *player, Field *field);

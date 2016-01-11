@@ -8,7 +8,6 @@ int main(int argc, char **argv) {
     TTF_Init();
 
     Graphic *graphic = create_graphic(850, 475);
-
     Game *game = create_game(graphic);
 
 //    game->state = START;
@@ -24,7 +23,10 @@ int main(int argc, char **argv) {
         SDL_Delay(16);
     }
 
-    SDL_DestroyWindow(graphic->window);
+    delete_game(game);
+    delete_graphic(graphic);
+
+    TTF_Quit();
     SDL_Quit();
 
     return EXIT_SUCCESS;

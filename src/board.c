@@ -76,6 +76,14 @@ Board *create_board(int cols, int rows, int tab[cols][rows]) {
     return new_board;
 }
 
+void delete_board(Board *board) {
+    for (int x = 0; x < board->width; x++) {
+        free(board->fields[x]);
+    }
+
+    free(board);
+}
+
 bool is_neighbour(int x1, int y1, int x2, int y2) {
     int odd[6][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}};
     int even[6][2] = {{-1, -1}, {0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}};
@@ -135,7 +143,7 @@ bool has_neighbour(int x, int y, enum Race race, Board *board) {
 void update_field_info(SDL_Renderer *renderer, Board *board) {
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
-    board->field_size = min(w / (2 * (0.5 + board->width)), 50);
+    board->field_size = min(w / (2 * (0.5 + board->width)), 30);
 
     board->field_width = board->field_size * 2;
     board->field_height = board->field_width * 0.75;

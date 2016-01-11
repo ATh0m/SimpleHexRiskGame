@@ -39,7 +39,7 @@ typedef struct PairStack {
 PairStack *create_pair_stack();
 void push(PairStack *pair_stack, Pair pair);
 void erase(PairStack *pair_stack, Pair pair);
-void clear(PairStack *pair_stack);
+void delete_pair_stack(PairStack *pair_stack);
 void print_stack(PairStack *pair_stack);
 
 #endif

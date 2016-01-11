@@ -5,16 +5,16 @@ Game *create_game(Graphic *graphic) {
     Game *new_game = malloc(sizeof(Game));
     new_game->graphic = graphic;
 
-//    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-//                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-//                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
-//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-//                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
-//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
-//                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
-//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
+    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
+                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
+                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
+                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
 
 //    int tab [5][5] = { {1, 1, 1, 1, 1},
 //                       {1, 1, 1, 1, 1},
@@ -22,23 +22,51 @@ Game *create_game(Graphic *graphic) {
 //                       {1, 1, 1, 1, 1},
 //                       {1, 1, 1, 1, 1} };
 
-    int tab[3][3] = { {1, 1, 1},
-                      {1, 1, 1},
-                      {1, 1, 1} };
+//    int tab[3][3] = { {1, 1, 1},
+//                      {1, 1, 1},
+//                      {1, 1, 1} };
 
-    new_game->board = create_board(3, 3, tab);
+//    int tab[2][2] = { {1, 1},
+//                      {1, 1} };
+
+    new_game->board = create_board(10, 11, tab);
     update_field_info(new_game->graphic->renderer, new_game->board);
 
-    new_game->players = create_players();
-
     new_game->backgroun_color = create_color(0, 0, 0, 255);
-
-    new_game->players->active_player_index = rand() % new_game->players->players_size;
-    new_game->players->active_players_amount = new_game->players->players_size;
 
     new_game->state = CREATE;
 
     return new_game;
+}
+
+void delete_game(Game *game) {
+
+    delete_board(game->board);
+    delete_players(game->players);
+    free(game);
+}
+
+void reset_game(Game *game) {
+    game->state = CREATE;
+
+    delete_players(game->players);
+    game->players = NULL;
+
+    delete_board(game->board);
+    game->board = NULL;
+
+    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
+                        {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
+                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+                        {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+                        {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+                        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
+                        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
+
+    game->board = create_board(10, 11, tab);
 }
 
 void draw_game(SDL_Renderer *renderer, Game *game) {
@@ -63,11 +91,7 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
         display_text(renderer, "3", create_color(128, 128, 128, 255), game->graphic->width/2 + 75, game->graphic->height/2+130, font_header);
         display_text(renderer, "4", create_color(128, 128, 128, 255), game->graphic->width/2 + 150, game->graphic->height/2+130, font_header);
     }
-    else if (game->state == WIN) {
-
-    }
     else {
-
 
         update_field_info(renderer, game->board);
         Player *player = game->players->list[game->players->active_player_index];
@@ -126,6 +150,14 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
                 break;
         }
 
+        if (game->state == WIN) {
+            boxRGBA (renderer, 0, game->graphic->height / 2 - 40, game->graphic->width, game->graphic->height / 2 + 40, 0, 0, 0, 170);
+
+            sprintf(message, "Gracz %s wygral. Kliknij, aby zaczac od nowa", player->name);
+            display_text(renderer, message, player->action_color, game->graphic->width / 2,
+                         game->graphic->height / 2, font_default);
+        }
+
     }
 
     SDL_RenderPresent(renderer);
@@ -133,24 +165,22 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
 
 void next_turn(Game *game) {
 
-    do {
-        game->players->active_player_index++;
-        if (game->players->active_player_index >= game->players->players_size) game->players->active_player_index = 0;
-    } while (!game->players->list[game->players->active_player_index]->active);
+    if (game->state != CREATE && game->state != WIN) {
+        do {
+            game->players->active_player_index++;
+            if (game->players->active_player_index >= game->players->players_size)
+                game->players->active_player_index = 0;
+        } while (!game->players->list[game->players->active_player_index]->active);
 
-    Player *player = game->players->list[game->players->active_player_index];
+        Player *player = game->players->list[game->players->active_player_index];
 
-    if (player->fields_stack->size == 0) {
-        game->state = START;
+        if (player->fields_stack->size == 0) {
+            game->state = START;
+        }
+        else if (player->fields_stack->size > 0) {
+            player->reinforcements = max(2, player->fields_stack->size / 3);
+            game->state = REINFORCEMENT;
+        }
     }
-    else if (player->fields_stack->size > 0) {
-        player->reinforcements = max(2, player->fields_stack->size / 3);
-        game->state = REINFORCEMENT;
-    }
 
-//    if (player->ai) {
-//        // TODO AI turn
-//        ai_action(player, game->board, game->players, &game->state);
-//        next_turn(game);
-//    }
 }

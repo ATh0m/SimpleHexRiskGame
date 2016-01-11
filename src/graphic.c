@@ -17,6 +17,13 @@ Graphic *create_graphic(int width, int height) {
     return new_graphic;
 }
 
+void delete_graphic(Graphic *graphic) {
+    SDL_DestroyWindow(graphic->window);
+    SDL_DestroyRenderer(graphic->renderer);
+
+    free(graphic);
+}
+
 void update_graphic_size(Graphic *graphic) {
     SDL_GetWindowSize(graphic->window, &graphic->width, &graphic->height);
 }

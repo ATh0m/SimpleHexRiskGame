@@ -28,8 +28,8 @@ bool ai_action(Player *player, Board *board, Players *players, enum State *state
 
     SDL_Delay(50);
 
-    clear(fields_adjacent_enemies);
-    clear(fields_adjacent_neutrals);
+    delete_pair_stack(fields_adjacent_enemies);
+    delete_pair_stack(fields_adjacent_neutrals);
 
     return end_turn;
 }
@@ -144,8 +144,8 @@ bool ai_move(Player *player, Board *board, enum State *state, Players *players, 
         player_move(player, field, board, state, players);
     }
 
-    clear(actionable_enemy_fields);
-    clear(actionable_neutral_fields);
+    delete_pair_stack(actionable_enemy_fields);
+    delete_pair_stack(actionable_neutral_fields);
 
     return true;
 }

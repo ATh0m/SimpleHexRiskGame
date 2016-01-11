@@ -21,6 +21,9 @@ typedef struct Game {
 } Game;
 
 Game *create_game(Graphic *graphic);
+void delete_game(Game *game);
+
+void reset_game(Game *game);
 
 void draw_game(SDL_Renderer *renderer, Game *game);
 

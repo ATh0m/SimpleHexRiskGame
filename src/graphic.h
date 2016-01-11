@@ -12,6 +12,7 @@ typedef struct Graphic {
 } Graphic;
 
 Graphic *create_graphic(int width, int height);
+void delete_graphic(Graphic *graphic);
 
 void update_graphic_size(Graphic *graphic);
 

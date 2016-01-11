@@ -43,7 +43,38 @@ void mouse_down_event(SDL_Event event, Game *game) {
     int x, y;
     SDL_GetMouseState(&x, &y);
 
-    if (game->state != CREATE && game->state != WIN) {
+    if (game->state == CREATE) {
+        int players_amount = -1;
+
+        if (y >= game->graphic->height/2 + 130 - 40 && y <= game->graphic->height/2 + 130 + 40) {
+            if (x >= game->graphic->width/2 - 150 - 40 && x <= game->graphic->width/2 - 150 + 40) {
+                players_amount = 0;
+            }
+            else if (x >= game->graphic->width/2 - 75 - 40 && x <= game->graphic->width/2 - 75 + 40) {
+                players_amount = 1;
+            }
+            else if (x >= game->graphic->width/2 - 40 && x <= game->graphic->width/2 + 40) {
+                players_amount = 2;
+            }
+            else if (x >= game->graphic->width/2 + 75 - 40 && x <= game->graphic->width/2 + 75 + 40) {
+                players_amount = 3;
+            }
+            else if (x >= game->graphic->width/2 + 150 - 40 && x <= game->graphic->width/2 + 150 + 40) {
+                players_amount = 4;
+            }
+        }
+
+        if (players_amount != -1) {
+            game->players = create_players(players_amount);
+            game->state = START;
+        }
+
+
+    }
+    else if (game->state == WIN) {
+        reset_game(game);
+    }
+    else {
 
         game->board->hover_field = point_to_field(x, y, game->board);
 

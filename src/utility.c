@@ -73,7 +73,7 @@ void erase(PairStack *pair_stack, Pair pair) {
     }
 }
 
-void clear(PairStack *pair_stack) {
+void delete_pair_stack(PairStack *pair_stack) {
     PairItem *pair_item = pair_stack->top;
     PairItem *temp_pair_item;
 
