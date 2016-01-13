@@ -103,13 +103,16 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
                     Color hover_color = player->hover_color;
                     Color action_color = player->action_color;
 
-                    if (is_actionable(game->board, x, y, player, game->state)) {
-                        if (!player->ai && game->board->hover_field != NULL) {
-                            if (x == game->board->hover_field->x && y == game->board->hover_field->y) {
-                                draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2, hover_color);
+                    if (!player->ai) {
+                        if (is_actionable(game->board, x, y, player, game->state)) {
+                            if (!player->ai && game->board->hover_field != NULL) {
+                                if (x == game->board->hover_field->x && y == game->board->hover_field->y) {
+                                    draw_filled_hex(renderer, point.x, point.y, game->board->field_size - 2,
+                                                    hover_color);
+                                }
                             }
+                            draw_hex(renderer, point.x, point.y, game->board->field_size - 1, action_color);
                         }
-                        draw_hex(renderer, point.x, point.y, game->board->field_size, action_color);
                     }
 
                     if (game->board->fields[x][y].owner > 0) {
@@ -127,17 +130,26 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
             case START:
                 sprintf(message, "Gracz %s wybierz swoje startowe pole", player->name);
                 display_text(renderer, message, player->action_color, game->graphic->width / 2,
-                             game->graphic->height - 30, font_default);
+                             game->graphic->height - 45, font_default);
+                if (!player->ai) {
+                    display_text(renderer, "Wybierz dowolne, wolne pole jako twój startowy teren", create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20, font_small);
+                }
                 break;
             case REINFORCEMENT:
                 sprintf(message, "Gracz %s rozstaw swoje siły. Pozostało %d", player->name, player->reinforcements);
                 display_text(renderer, message, player->action_color, game->graphic->width / 2,
-                             game->graphic->height - 30, font_default);
+                             game->graphic->height - 45, font_default);
+                if (!player->ai) {
+                    display_text(renderer, "Wybierz swoje pole, które chcesz wzmocnić. Kliknięcie prawym przyciskiem dodaje całą, pozostałą siłę", create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20, font_small);
+                }
                 break;
             case MOVE:
                 sprintf(message, "Gracz %s wykonaj ruch", player->name);
                 display_text(renderer, message, player->action_color, game->graphic->width / 2,
-                             game->graphic->height - 30, font_default);
+                             game->graphic->height - 45, font_default);
+                if (!player->ai) {
+                    display_text(renderer, "Dołącz neutralne pole, zaatakuj wroga lub wzmocnij swój teren", create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20, font_small);
+                }
                 break;
             default:
                 break;

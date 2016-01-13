@@ -76,7 +76,7 @@ void draw_hex(SDL_Renderer *renderer, int x, int y, int size, Color color) {
     short last_y = vy[5];
 
     for (int i = 0; i < 6; i++) {
-        thickLineRGBA(renderer, last_x, last_y, vx[i], vy[i], 5, color.r, color.g, color.b, color.a);
+        thickLineRGBA(renderer, last_x, last_y, vx[i], vy[i], 3, color.r, color.g, color.b, color.a);
 
         last_x = vx[i];
         last_y = vy[i];
@@ -94,7 +94,7 @@ void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y,
         exit(1);
     }
 
-    SDL_Surface* surface_message = TTF_RenderText_Solid(font, text, sdl_color);
+    SDL_Surface* surface_message = TTF_RenderUTF8_Blended(font, text, sdl_color);
 
     SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surface_message);
 

@@ -52,7 +52,7 @@ void delete_players(Players *players) {
     }
 }
 
-bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players) {
+bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players, Uint8 button) {
     bool end_turn = false;
 
     switch (*state) {
@@ -60,7 +60,7 @@ bool player_action(Player *player, Field *field, Board *board, enum State *state
             end_turn = player_start(player, field);
             break;
         case REINFORCEMENT:
-            player_reinforcement(player, field, state);
+            player_reinforcement(player, field, state, button);
             break;
         case MOVE:
             end_turn = player_move(player, field, board, state, players);
@@ -79,9 +79,16 @@ bool player_start(Player *player, Field *field) {
     return true;
 }
 
-void player_reinforcement(Player *player, Field *field, enum State *state) {
-    field->force++;
-    player->reinforcements--;
+void player_reinforcement(Player *player, Field *field, enum State *state, Uint8 button) {
+
+    if (button == SDL_BUTTON_LEFT) {
+        field->force++;
+        player->reinforcements--;
+    }
+    else if (button == SDL_BUTTON_RIGHT) {
+        field->force += player->reinforcements;
+        player->reinforcements = 0;
+    }
 
     if (player->reinforcements <= 0) {
         *state = MOVE;

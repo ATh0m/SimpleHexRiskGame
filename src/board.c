@@ -145,7 +145,7 @@ void update_field_info(SDL_Renderer *renderer, Board *board) {
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
 
-    board->field_size = (h - 70) / ((board->height + 0.25) * 1.5);
+    board->field_size = (h - 100) / ((board->height + 0.25) * 1.5);
     int width_control = (w - board->width * board->field_size * 2 - board->field_size);
 
     if (width_control < 10) {

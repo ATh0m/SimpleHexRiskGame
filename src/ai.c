@@ -72,15 +72,15 @@ void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack
 
     if (fields_adjacent_enemies->size > 0 && ((rand() / (double) RAND_MAX) < 0.75 || fields_adjacent_neutrals->size == 0)) {
         field = random_field(fields_adjacent_enemies, board);
-        player_reinforcement(player, field, state);
+        player_reinforcement(player, field, state, SDL_BUTTON_LEFT);
     }
     else if (fields_adjacent_neutrals->size > 0){
         field = random_field(fields_adjacent_neutrals, board);
-        player_reinforcement(player, field, state);
+        player_reinforcement(player, field, state, SDL_BUTTON_LEFT);
     }
     else {
         field = random_field(player->fields_stack, board);
-        player_reinforcement(player, field, state);
+        player_reinforcement(player, field, state, SDL_BUTTON_LEFT);
     }
 
 }

@@ -39,9 +39,9 @@ typedef struct Players {
 Players *create_players(int players_amount);
 void delete_players(Players *players);
 
-bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players);
+bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players, Uint8 button);
 bool player_start(Player *player, Field *field);
-void player_reinforcement(Player *player, Field *field, enum State *state);
+void player_reinforcement(Player *player, Field *field, enum State *state, Uint8 button);
 bool player_move(Player *player, Field *field, Board *board, enum State *state, Players *players);
 bool is_actionable(Board *board, int x, int y, Player *player, enum State state);
 

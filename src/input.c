@@ -88,7 +88,7 @@ void mouse_down_event(SDL_Event event, Game *game) {
 
         Field *field = &game->board->fields[game->board->hover_field->x][game->board->hover_field->y];
 
-        if (player_action(player, field, game->board, &game->state, game->players)) next_turn(game);
+        if (player_action(player, field, game->board, &game->state, game->players, event.button.button)) next_turn(game);
 
     }
 }
