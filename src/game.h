@@ -27,6 +27,8 @@ void delete_game(Game *game);
 
 void reset_game(Game *game);
 
+Board *generate_new_game_board();
+
 void draw_game(SDL_Renderer *renderer, Game *game);
 
 void next_turn(Game *game);

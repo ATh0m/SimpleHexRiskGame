@@ -5,20 +5,12 @@ Game *create_game(Graphic *graphic) {
     Game *new_game = malloc(sizeof(Game));
     new_game->graphic = graphic;
 
-    int width = rand() % 5 + 7;
-    int height = rand() % 5 + 7;
-
-    int **tab = generate_fields_tab(width, height);
-
-    new_game->board = create_board(width, height, tab);
-
-    delete_generated_fields_tab(tab, width, height);
-
     new_game->players = NULL;
 
+    new_game->board = generate_new_game_board();
     update_field_info(new_game->graphic->renderer, new_game->board);
 
-    new_game->backgroun_color = create_color(0, 0, 0, 255);
+    new_game->backgroun_color = BACKGROUND_COLOR;
 
     new_game->state = CREATE;
 
@@ -41,14 +33,21 @@ void reset_game(Game *game) {
     delete_board(game->board);
     game->board = NULL;
 
-    int width = rand() % 5 + 7;
-    int height = rand() % 5 + 7;
+    game->board = generate_new_game_board();
+    update_field_info(game->graphic->renderer, game->board);
+}
+
+Board *generate_new_game_board() {
+    int width = BOARD_WIDTH;
+    int height = BOARD_HEIGHT;
 
     int **tab = generate_fields_tab(width, height);
 
-    game->board = create_board(width, height, tab);
+    Board *new_board = create_board(width, height, tab);
 
     delete_generated_fields_tab(tab, width, height);
+
+    return new_board;
 }
 
 void draw_game(SDL_Renderer *renderer, Game *game) {
@@ -202,7 +201,7 @@ void display_splash_screen(Game *game, SDL_Renderer *renderer) {
     display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie połowę siły sąsiednich, przyjaznych pól.",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 10,
                  font_small);
-    display_text(renderer, "Mapa jest generowana losowo.",
+    display_text(renderer, "Mapa, jak i kolejność, jest losowo-randomizowana.",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 + 10,
                  font_small);
 

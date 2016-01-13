@@ -17,6 +17,11 @@
 #define WINDOW_MIN_WIDTH 655
 #define WINDOW_MIN_HEIGHT 328
 
+#define BACKGROUND_COLOR create_color(0, 0, 0, 255)
+
+#define BOARD_WIDTH rand() % 5 + 7
+#define BOARD_HEIGHT rand() % 5 + 7
+
 #define BLANK_FIELDS_RATE 0.5
 
 #define PLAYER1 "CZERWONY", 1, true, players_amount < 1, create_color(255, 204, 204, 255), create_color(255, 102, 102, 255), create_color(255, 51, 51, 255)
