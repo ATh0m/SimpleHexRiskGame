@@ -43,11 +43,13 @@ Players *create_players(int players_amount) {
 }
 
 void delete_players(Players *players) {
-    for(int i = 0; i < players->players_size; i++) {
-        delete_player(players->list[i]);
-    }
+    if (players != NULL) {
+        for (int i = 0; i < players->players_size; i++) {
+            delete_player(players->list[i]);
+        }
 
-    free(players);
+        free(players);
+    }
 }
 
 bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players) {

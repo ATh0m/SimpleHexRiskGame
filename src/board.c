@@ -141,14 +141,21 @@ bool has_neighbour(int x, int y, enum Race race, Board *board) {
 }
 
 void update_field_info(SDL_Renderer *renderer, Board *board) {
+
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
-    board->field_size = min(w / (2 * (0.5 + board->width)), 30);
+
+    board->field_size = (h - 70) / ((board->height + 0.25) * 1.5);
+    int width_control = (w - board->width * board->field_size * 2 - board->field_size);
+
+    if (width_control < 10) {
+        board->field_size -= abs(width_control) / (board->width * 2 - 1);
+    }
 
     board->field_width = board->field_size * 2;
     board->field_height = board->field_width * 0.75;
 
     board->offset_x = (w - board->width * board->field_width - board->field_width * 0.5) * 0.5;
-    board->offset_y = board->field_width * 0.5;
+    board->offset_y = 25;
 
 }

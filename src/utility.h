@@ -23,6 +23,7 @@ Triple create_triple(int x, int y, int z);
 
 int max (int a, int b);
 int min (int a, int b);
+int abs (int a);
 
 typedef struct PairItem {
     Pair pair;

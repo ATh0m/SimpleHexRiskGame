@@ -5,30 +5,6 @@ Game *create_game(Graphic *graphic) {
     Game *new_game = malloc(sizeof(Game));
     new_game->graphic = graphic;
 
-//    int tab[10][11] = { {0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-//                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//                      {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-//                      {0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1},
-//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-//                      {1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0},
-//                      {1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
-//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
-//                      {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0},
-//                      {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} };
-
-//    int tab [5][5] = { {1, 1, 1, 1, 1},
-//                       {1, 1, 1, 1, 1},
-//                       {1, 1, 1, 1, 1},
-//                       {1, 1, 1, 1, 1},
-//                       {1, 1, 1, 1, 1} };
-
-//    int tab[3][3] = { {1, 1, 1},
-//                      {1, 1, 1},
-//                      {1, 1, 1} };
-
-//    int tab[2][2] = { {1, 1},
-//                      {1, 1} };
-
     int width = rand() % 5 + 7;
     int height = rand() % 5 + 7;
 
@@ -37,6 +13,8 @@ Game *create_game(Graphic *graphic) {
     new_game->board = create_board(width, height, tab);
 
     delete_generated_fields_tab(tab, width, height);
+
+    new_game->players = NULL;
 
     update_field_info(new_game->graphic->renderer, new_game->board);
 

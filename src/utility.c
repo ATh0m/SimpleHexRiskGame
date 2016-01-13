@@ -28,6 +28,10 @@ int min (int a, int b) {
     return a < b ? a : b;
 }
 
+int abs (int a) {
+    return a < 0 ? -a : a;
+}
+
 PairItem *create_pair_item(Pair pair, PairItem *prev) {
     PairItem *new_pair_item = malloc(sizeof(PairItem));
 
