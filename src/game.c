@@ -8,7 +8,7 @@ Game *create_game(Graphic *graphic) {
     int width = rand() % 5 + 7;
     int height = rand() % 5 + 7;
 
-    int **tab = generate_fileds_tab(width, height);
+    int **tab = generate_fields_tab(width, height);
 
     new_game->board = create_board(width, height, tab);
 
@@ -44,7 +44,7 @@ void reset_game(Game *game) {
     int width = rand() % 5 + 7;
     int height = rand() % 5 + 7;
 
-    int **tab = generate_fileds_tab(width, height);
+    int **tab = generate_fields_tab(width, height);
 
     game->board = create_board(width, height, tab);
 
@@ -201,6 +201,9 @@ void display_splash_screen(Game *game, SDL_Renderer *renderer) {
                  font_small);
     display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie połowę siły sąsiednich, przyjaznych pól.",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 10,
+                 font_small);
+    display_text(renderer, "Mapa jest generowana losowo.",
+                 create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 + 10,
                  font_small);
 
     display_text(renderer, "Wybierz liczbę graczy, którzy wezmą udział w potyczce.", create_color(128, 128, 128, 255),

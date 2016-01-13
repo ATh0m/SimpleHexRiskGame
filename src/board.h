@@ -4,7 +4,9 @@
 #include "defs.h"
 #include "utility.h"
 #include "graphic.h"
-#include "generator.h"
+
+int odd[6][2];
+int even[6][2];
 
 typedef struct Field {
     int owner;

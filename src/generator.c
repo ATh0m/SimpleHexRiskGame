@@ -4,23 +4,28 @@
 
 #include "generator.h"
 
-int **generate_fileds_tab(int width, int height) {
+int **generate_fields_tab(int width, int height) {
 
     int **fields_tab = malloc(width * sizeof(int *));
 
-    int blank_fields = (int) (width * height * 0.7);
+    int blank_fields = (int) (width * height * 0.4);
     blank_fields = rand() % blank_fields;
 
     for (int x = 0; x < width; x++) {
         fields_tab[x] = malloc(height * sizeof(int));
         for (int y = 0; y < height; y++) {
-            if (blank_fields <= 0 || (rand() / (double) RAND_MAX) < 0.2) {
-                fields_tab[x][y] = 1;
-            }
-            else {
-                fields_tab[x][y] = 0;
-                blank_fields--;
-            }
+            fields_tab[x][y] = 1;
+        }
+    }
+
+    int x, y;
+
+    while (blank_fields > 0) {
+        x = rand() % width;
+        y = rand() % height;
+        if (fields_tab[x][y] != 0) {
+            fields_tab[x][y] = 0;
+            blank_fields--;
         }
     }
 

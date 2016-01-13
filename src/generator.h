@@ -6,8 +6,10 @@
 #define SIMPLEHEXRISKGAME_GENERATOR_H
 
 #include "defs.h"
+#include "utility.h"
+#include "board.h"
 
-int **generate_fileds_tab(int width, int height);
+int **generate_fields_tab(int width, int height);
 
 void delete_generated_fields_tab(int **fields_tab, int width, int height);
 

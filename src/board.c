@@ -1,5 +1,19 @@
 #include "board.h"
 
+int odd[6][2] = {{0,  -1},
+                 {1,  -1},
+                 {1,  0},
+                 {1,  1},
+                 {0,  1},
+                 {-1, 0}};
+
+int even[6][2] = {{-1, -1},
+                  {0,  -1},
+                  {1,  0},
+                  {0,  1},
+                  {-1, 1},
+                  {-1, 0}};
+
 Pair point_to_pair(int x, int y, Board *board) {
     Pair pair;
 
@@ -85,18 +99,6 @@ void delete_board(Board *board) {
 }
 
 bool is_neighbour(int x1, int y1, int x2, int y2) {
-    int odd[6][2] = {{0,  -1},
-                     {1,  -1},
-                     {1,  0},
-                     {1,  1},
-                     {0,  1},
-                     {-1, 0}};
-    int even[6][2] = {{-1, -1},
-                      {0,  -1},
-                      {1,  0},
-                      {0,  1},
-                      {-1, 1},
-                      {-1, 0}};
 
     for (int i = 0; i < 6; i++) {
         if (y1 % 2 == 0) {
@@ -115,18 +117,6 @@ bool is_neighbour(int x1, int y1, int x2, int y2) {
 }
 
 bool has_neighbour(int x, int y, enum Race race, Board *board) {
-    int odd[6][2] = {{0,  -1},
-                     {1,  -1},
-                     {1,  0},
-                     {1,  1},
-                     {0,  1},
-                     {-1, 0}};
-    int even[6][2] = {{-1, -1},
-                      {0,  -1},
-                      {1,  0},
-                      {0,  1},
-                      {-1, 1},
-                      {-1, 0}};
 
     int X, Y;
 
