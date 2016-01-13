@@ -70,13 +70,13 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
 
     if (game->state == CREATE) {
         display_text(renderer, "SIMPLEHEXRISKGAME", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-130, font_header);
-        display_text(renderer, "Jest to prosta gra strategiczna podobna do Ryzyko. Twoim celem jest wyeliminowanie pozostalych wrogow.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-70, font_small);
-        display_text(renderer, "Przejmuj neutralne i wrogie tereny, aby zwiekszac swoja sile", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-50, font_small);
-        display_text(renderer, "Kiedy przejmiesz pusty teren jego sila bedzie wynosila polowe sily sasiednich, przyjaznych terenow.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-30, font_small);
-        display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie polowe sily sasiednich, przyjaznych pol.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-10, font_small);
+        display_text(renderer, "Jest to prosta gra strategiczna podobna do Ryzyko. Twoim celem jest wyeliminowanie pozostałych wrogów.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-70, font_small);
+        display_text(renderer, "Przejmuj neutralne i wrogie tereny, aby zwiększac swoją siłę", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-50, font_small);
+        display_text(renderer, "Kiedy przejmiesz pusty teren jego siła będzie wynosiła połowę siły sąsiednich, przyjaznych terenów.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-30, font_small);
+        display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie połowę siły sąsiednich, przyjaznych pól.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2-10, font_small);
 
-        display_text(renderer, "Wybierz liczbe graczy, ktorzy wezma udzial w potyczce.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+50, font_small);
-        display_text(renderer, "Nad reszta kontrole przejmie komputer.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+70, font_small);
+        display_text(renderer, "Wybierz liczbę graczy, którzy wezmą udział w potyczce.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+50, font_small);
+        display_text(renderer, "Nad resztą kontrolę przejmie komputer.", create_color(128, 128, 128, 255), game->graphic->width/2, game->graphic->height/2+70, font_small);
 
         display_text(renderer, "0", create_color(128, 128, 128, 255), game->graphic->width/2 - 150, game->graphic->height/2+130, font_header);
         display_text(renderer, "1", create_color(128, 128, 128, 255), game->graphic->width/2 - 75, game->graphic->height/2+130, font_header);
@@ -125,12 +125,12 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
 
         switch (game->state) {
             case START:
-                sprintf(message, "Gracz %s wybiersz swoje startowe pole", player->name);
+                sprintf(message, "Gracz %s wybierz swoje startowe pole", player->name);
                 display_text(renderer, message, player->action_color, game->graphic->width / 2,
                              game->graphic->height - 30, font_default);
                 break;
             case REINFORCEMENT:
-                sprintf(message, "Gracz %s rozstaw swoje sily. Pozostalo %d", player->name, player->reinforcements);
+                sprintf(message, "Gracz %s rozstaw swoje siły. Pozostało %d", player->name, player->reinforcements);
                 display_text(renderer, message, player->action_color, game->graphic->width / 2,
                              game->graphic->height - 30, font_default);
                 break;
@@ -146,7 +146,7 @@ void draw_game(SDL_Renderer *renderer, Game *game) {
         if (game->state == WIN) {
             boxRGBA (renderer, 0, game->graphic->height / 2 - 40, game->graphic->width, game->graphic->height / 2 + 40, 0, 0, 0, 170);
 
-            sprintf(message, "Gracz %s wygral. Kliknij, aby zaczac od nowa", player->name);
+            sprintf(message, "Gracz %s wygrał. Kliknij, aby zacząć od nowa", player->name);
             display_text(renderer, message, player->action_color, game->graphic->width / 2,
                          game->graphic->height / 2, font_default);
         }

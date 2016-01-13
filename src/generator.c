@@ -8,7 +8,7 @@ int **generate_fileds_tab(int width, int height) {
 
     int **fields_tab = malloc(width * sizeof(int *));
 
-    int blank_fields = width * height * 0.4;
+    int blank_fields = width * height * 0.7;
     blank_fields = rand() % blank_fields;
 
     printf("%d\n", blank_fields);
@@ -16,7 +16,7 @@ int **generate_fileds_tab(int width, int height) {
     for (int x = 0; x < width; x++) {
         fields_tab[x] = malloc(height * sizeof(int));
         for (int y = 0; y < height; y++) {
-            if (blank_fields <= 0 || (rand() / (double)RAND_MAX) < 0.5) {
+            if (blank_fields <= 0 || (rand() / (double)RAND_MAX) < 0.2) {
                 fields_tab[x][y] = 1;
             }
             else {
