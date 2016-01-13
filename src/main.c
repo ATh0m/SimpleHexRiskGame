@@ -2,15 +2,13 @@
 
 int main(int argc, char **argv) {
 
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
 
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
 
     Graphic *graphic = create_graphic(850, 475);
     Game *game = create_game(graphic);
-
-//    game->state = START;
 
     int quit = false;
 

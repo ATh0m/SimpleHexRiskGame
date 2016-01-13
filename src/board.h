@@ -39,6 +39,7 @@ Pair field_to_pair(Field *field);
 Field *random_field(PairStack *pair_stack, Board *board);
 
 Board *create_board(int cols, int rows, int **tab);
+
 void delete_board(Board *board);
 
 bool is_neighbour(int x1, int y1, int x2, int y2);

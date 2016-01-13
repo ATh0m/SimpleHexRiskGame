@@ -7,22 +7,24 @@
 #include "battle.h"
 
 typedef struct Player {
-	char* name;
-	int id;
+    char *name;
+    int id;
 
-	bool active;
-	bool ai;
+    bool active;
+    bool ai;
 
-	PairStack *fields_stack;
+    PairStack *fields_stack;
 
-	Color field_color;
-	Color hover_color;
-	Color action_color;
+    Color field_color;
+    Color hover_color;
+    Color action_color;
 
-	int reinforcements;
+    int reinforcements;
 } Player;
 
-Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color, Color action_color);
+Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color,
+                      Color action_color);
+
 void delete_player(Player *player);
 
 typedef struct Players {
@@ -37,12 +39,17 @@ typedef struct Players {
 } Players;
 
 Players *create_players(int players_amount);
+
 void delete_players(Players *players);
 
 bool player_action(Player *player, Field *field, Board *board, enum State *state, Players *players, Uint8 button);
+
 bool player_start(Player *player, Field *field);
+
 void player_reinforcement(Player *player, Field *field, enum State *state, Uint8 button);
+
 bool player_move(Player *player, Field *field, Board *board, enum State *state, Players *players);
+
 bool is_actionable(Board *board, int x, int y, Player *player, enum State state);
 
 #endif

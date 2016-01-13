@@ -20,15 +20,15 @@ Triple create_triple(int x, int y, int z) {
     return new_triple;
 }
 
-int max (int a, int b) {
+int max(int a, int b) {
     return a > b ? a : b;
 }
 
-int min (int a, int b) {
+int min(int a, int b) {
     return a < b ? a : b;
 }
 
-int abs (int a) {
+int abs(int a) {
     return a < 0 ? -a : a;
 }
 
@@ -63,7 +63,7 @@ void erase(PairStack *pair_stack, Pair pair) {
 
     while (pair_item != NULL) {
 
-        if(pair_item->pair.x == pair.x && pair_item->pair.y == pair.y) {
+        if (pair_item->pair.x == pair.x && pair_item->pair.y == pair.y) {
             if (last == NULL) pair_stack->top = pair_item->prev;
             else last->prev = pair_item->prev;
 

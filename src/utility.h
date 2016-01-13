@@ -3,8 +3,22 @@
 
 #include "defs.h"
 
+enum State {
+    CREATE,
+    START,
+    REINFORCEMENT,
+    MOVE,
+    WIN
+};
+
+enum Race {
+    NEUTRAL,
+    ENEMY,
+    ALLY
+};
+
 typedef struct Color {
-    int r, g, b, a;
+    Uint8 r, g, b, a;
 } Color;
 
 Color create_color(int r, int g, int b, int a);
@@ -21,9 +35,11 @@ typedef struct Triple {
 
 Triple create_triple(int x, int y, int z);
 
-int max (int a, int b);
-int min (int a, int b);
-int abs (int a);
+int max(int a, int b);
+
+int min(int a, int b);
+
+int abs(int a);
 
 typedef struct PairItem {
     Pair pair;
@@ -38,9 +54,13 @@ typedef struct PairStack {
 } PairStack;
 
 PairStack *create_pair_stack();
+
 void push(PairStack *pair_stack, Pair pair);
+
 void erase(PairStack *pair_stack, Pair pair);
+
 void delete_pair_stack(PairStack *pair_stack);
+
 void print_stack(PairStack *pair_stack);
 
 #endif

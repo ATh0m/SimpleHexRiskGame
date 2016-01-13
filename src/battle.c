@@ -4,8 +4,8 @@
 
 #include "battle.h"
 
-int battle_cmp (const void * a, const void * b) {
-    return ( *(int*)b - *(int*)a );
+int battle_cmp(const void *a, const void *b) {
+    return (*(int *) b - *(int *) a);
 }
 
 Pair battle(int attack_power, int defense_power) {
@@ -26,18 +26,8 @@ Pair battle(int attack_power, int defense_power) {
             defense_dices[i] = rand() % 6 + 1;
         }
 
-        qsort(attack_dices, attack_dices_amount, sizeof(int), battle_cmp);
-        qsort(defense_dices, defense_dices_amount, sizeof(int), battle_cmp);
-
-//        for (int i = 0; i < attack_dices_amount; i++) {
-//            printf("%d ", attack_dices[i]);
-//        }
-//        printf("\n");
-//
-//        for (int i = 0; i < defense_dices_amount; i++) {
-//            printf("%d ", defense_dices[i]);
-//        }
-//        printf("\n");
+        qsort(attack_dices, (size_t) attack_dices_amount, sizeof(int), battle_cmp);
+        qsort(defense_dices, (size_t) defense_dices_amount, sizeof(int), battle_cmp);
 
         for (int i = 0; i < min(attack_dices_amount, defense_dices_amount); i++) {
             if (attack_dices[i] > defense_dices[i]) {

@@ -1,6 +1,7 @@
 #include "player.h"
 
-Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color, Color action_color) {
+Player *create_player(char *name, int id, bool active, bool ai, Color field_color, Color hover_color,
+                      Color action_color) {
 
 
     Player *new_player = malloc(sizeof(Player));
@@ -28,13 +29,13 @@ void delete_player(Player *player) {
 Players *create_players(int players_amount) {
     Players *new_players = malloc(sizeof(Players));
 
-    new_players->list = malloc(4 * sizeof(Player*));
+    new_players->list = malloc(4 * sizeof(Player *));
     new_players->players_size = 4;
 
-    new_players->list[0] = create_player("Red", 1, true, players_amount < 1, create_color(255, 204, 204, 255), create_color(255, 102, 102, 255), create_color(255, 51, 51, 255));
-    new_players->list[1] = create_player("Blue", 2, true, players_amount < 2, create_color(51, 51, 255, 255), create_color(153, 153, 255, 255), create_color(0, 0, 204, 255));
-    new_players->list[2] = create_player("Green", 3, true, players_amount < 3, create_color(122, 216, 138, 255), create_color(78, 174, 95, 255), create_color(19, 86, 31, 255));
-    new_players->list[3] = create_player("Yellow", 4, true, players_amount < 4, create_color(255, 248, 144, 255), create_color(227, 220, 102, 255), create_color(113, 107, 24, 255));
+    new_players->list[0] = create_player(PLAYER1);
+    new_players->list[1] = create_player(PLAYER2);
+    new_players->list[2] = create_player(PLAYER3);
+    new_players->list[3] = create_player(PLAYER4);
 
     new_players->active_player_index = rand() % new_players->players_size;
     new_players->active_players_amount = new_players->players_size;
@@ -113,7 +114,7 @@ bool player_move(Player *player, Field *field, Board *board, enum State *state, 
         }
 
         push(player->fields_stack, field_to_pair(field));
-        field->force = max(1, attack_power/2);
+        field->force = max(1, attack_power / 2);
 
         return true;
     }
@@ -124,7 +125,8 @@ bool player_move(Player *player, Field *field, Board *board, enum State *state, 
         while (pair_item != NULL) {
             if (is_neighbour(field->x, field->y, pair_item->pair.x, pair_item->pair.y)) {
                 attack_power += floor(board->fields[pair_item->pair.x][pair_item->pair.y].force / 2.0);
-                board->fields[pair_item->pair.x][pair_item->pair.y].force = ceil(board->fields[pair_item->pair.x][pair_item->pair.y].force / 2.0);
+                board->fields[pair_item->pair.x][pair_item->pair.y].force = (int) ceil(
+                        board->fields[pair_item->pair.x][pair_item->pair.y].force / 2.0);
             }
             pair_item = pair_item->prev;
         }
@@ -137,7 +139,7 @@ bool player_move(Player *player, Field *field, Board *board, enum State *state, 
         defense_power = result.y;
 
         if (attack_power > 0) {
-            Player *opponent = players->list[field->owner-1];
+            Player *opponent = players->list[field->owner - 1];
 
             erase(opponent->fields_stack, field_to_pair(field));
 

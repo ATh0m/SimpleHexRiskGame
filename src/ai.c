@@ -34,7 +34,8 @@ bool ai_action(Player *player, Board *board, Players *players, enum State *state
     return end_turn;
 }
 
-void create_fields_adjacent(PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals, Player *player, Board *board) {
+void create_fields_adjacent(PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals, Player *player,
+                            Board *board) {
 
     PairItem *pair_item = player->fields_stack->top;
     while (pair_item != NULL) {
@@ -59,7 +60,7 @@ bool ai_start(Player *player, Board *board) {
         y = rand() % board->height;
 
         if (board->fields[x][y].owner == 0) {
-            if (!has_neighbour(x, y, ENEMY, board) || true) {
+            if (!has_neighbour(x, y, ENEMY, board) || board->width * board->height <= 30) {
                 player_start(player, pair_to_field(create_pair(x, y), board));
                 return true;
             }
@@ -67,14 +68,16 @@ bool ai_start(Player *player, Board *board) {
     }
 }
 
-void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals) {
+void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack *fields_adjacent_enemies,
+                      PairStack *fields_adjacent_neutrals) {
     Field *field;
 
-    if (fields_adjacent_enemies->size > 0 && ((rand() / (double) RAND_MAX) < 0.75 || fields_adjacent_neutrals->size == 0)) {
+    if (fields_adjacent_enemies->size > 0 &&
+        ((rand() / (double) RAND_MAX) < 0.75 || fields_adjacent_neutrals->size == 0)) {
         field = random_field(fields_adjacent_enemies, board);
         player_reinforcement(player, field, state, SDL_BUTTON_LEFT);
     }
-    else if (fields_adjacent_neutrals->size > 0){
+    else if (fields_adjacent_neutrals->size > 0) {
         field = random_field(fields_adjacent_neutrals, board);
         player_reinforcement(player, field, state, SDL_BUTTON_LEFT);
     }
@@ -85,18 +88,19 @@ void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack
 
 }
 
-int actionable_enemy_fields_cmp (const void * a, const void * b) {
-    return ( (*(Triple*)b).z - (*(Triple*)a).z );
+int actionable_enemy_fields_cmp(const void *a, const void *b) {
+    return ((*(Triple *) b).z - (*(Triple *) a).z);
 }
 
-bool ai_move(Player *player, Board *board, enum State *state, Players *players, PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals) {
+bool ai_move(Player *player, Board *board, enum State *state, Players *players, PairStack *fields_adjacent_enemies,
+             PairStack *fields_adjacent_neutrals) {
     PairStack *actionable_neutral_fields = create_pair_stack();
     PairStack *actionable_enemy_fields = create_pair_stack();
 
     Field *field;
 
     for (int x = 0; x < board->width; x++) {
-        for(int y = 0; y < board->height; y++) {
+        for (int y = 0; y < board->height; y++) {
             if (is_actionable(board, x, y, player, *state)) {
                 if (board->fields[x][y].owner == 0) {
                     push(actionable_neutral_fields, create_pair(x, y));
@@ -108,29 +112,34 @@ bool ai_move(Player *player, Board *board, enum State *state, Players *players, 
         }
     }
 
-    if ((rand() / (double)RAND_MAX) < 0.75 || actionable_enemy_fields->size == 0) {
-        if (actionable_enemy_fields->size > 0 && ((rand() / (double)RAND_MAX) < 0.35 || actionable_neutral_fields->size == 0)) {
+    if ((rand() / (double) RAND_MAX) < 0.75 || actionable_enemy_fields->size == 0) {
+        if (actionable_enemy_fields->size > 0 &&
+            ((rand() / (double) RAND_MAX) < 0.35 || actionable_neutral_fields->size == 0)) {
             Triple actionable_enemy_fields_tab[actionable_enemy_fields->size];
 
             int index = 0;
             PairItem *pair_item = actionable_enemy_fields->top;
             while (pair_item != NULL) {
-                actionable_enemy_fields_tab[index] = create_triple(pair_item->pair.x, pair_item->pair.y, board->fields[pair_item->pair.x][pair_item->pair.y].force);
+                actionable_enemy_fields_tab[index] = create_triple(pair_item->pair.x, pair_item->pair.y,
+                                                                   board->fields[pair_item->pair.x][pair_item->pair.y].force);
                 pair_item = pair_item->prev;
                 index++;
             }
 
-            qsort(actionable_enemy_fields_tab, actionable_enemy_fields->size, sizeof(Triple), actionable_enemy_fields_cmp);
+            qsort(actionable_enemy_fields_tab, (size_t) actionable_enemy_fields->size, sizeof(Triple),
+                  actionable_enemy_fields_cmp);
 
-            if ((rand() / (double)RAND_MAX) < 0.5) {
-                field = pair_to_field(create_pair(actionable_enemy_fields_tab[0].x, actionable_enemy_fields_tab[0].y) ,board);
+            if ((rand() / (double) RAND_MAX) < 0.5) {
+                field = pair_to_field(create_pair(actionable_enemy_fields_tab[0].x, actionable_enemy_fields_tab[0].y),
+                                      board);
             }
             else {
                 index = rand() % actionable_enemy_fields->size;
-                field = pair_to_field(create_pair(actionable_enemy_fields_tab[index].x, actionable_enemy_fields_tab[index].y) ,board);
+                field = pair_to_field(
+                        create_pair(actionable_enemy_fields_tab[index].x, actionable_enemy_fields_tab[index].y), board);
             }
         }
-        else if (actionable_neutral_fields->size > 0){
+        else if (actionable_neutral_fields->size > 0) {
             field = random_field(actionable_neutral_fields, board);
         }
         else {
@@ -143,7 +152,7 @@ bool ai_move(Player *player, Board *board, enum State *state, Players *players, 
         if (fields_adjacent_enemies->size > 0) {
             field = random_field(fields_adjacent_enemies, board);
         }
-        else if(fields_adjacent_neutrals->size > 0){
+        else if (fields_adjacent_neutrals->size > 0) {
             field = random_field(fields_adjacent_neutrals, board);
         }
         else {

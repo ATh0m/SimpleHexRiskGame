@@ -3,8 +3,8 @@
 Pair point_to_pair(int x, int y, Board *board) {
     Pair pair;
 
-    pair.y = floor((y - board->offset_y) / board->field_height);
-    pair.x = floor(((pair.y % 2 == 0 ? x : x - board->field_size) - board->offset_x) / board->field_width);
+    pair.y = (int) floor((y - board->offset_y) / board->field_height);
+    pair.x = (int) floor(((pair.y % 2 == 0 ? x : x - board->field_size) - board->offset_x) / board->field_width);
 
     return pair;
 }
@@ -24,9 +24,9 @@ Field *point_to_field(int x, int y, Board *board) {
 Pair field_to_point(int x, int y, Board *board) {
     Pair point;
 
-    point.y = y * board->field_height + board->field_height * 0.5 + board->offset_y;
-    point.x = (y % 2 == 0 ? 0 : board->field_width * 0.5) + x * board->field_width + board->field_width * 0.5 +
-              board->offset_x;
+    point.y = (int) (y * board->field_height + board->field_height * 0.5 + board->offset_y);
+    point.x = (int) ((y % 2 == 0 ? 0 : board->field_width * 0.5) + x * board->field_width + board->field_width * 0.5 +
+                     board->offset_x);
 
     return point;
 }
@@ -85,8 +85,18 @@ void delete_board(Board *board) {
 }
 
 bool is_neighbour(int x1, int y1, int x2, int y2) {
-    int odd[6][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}};
-    int even[6][2] = {{-1, -1}, {0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}};
+    int odd[6][2] = {{0,  -1},
+                     {1,  -1},
+                     {1,  0},
+                     {1,  1},
+                     {0,  1},
+                     {-1, 0}};
+    int even[6][2] = {{-1, -1},
+                      {0,  -1},
+                      {1,  0},
+                      {0,  1},
+                      {-1, 1},
+                      {-1, 0}};
 
     for (int i = 0; i < 6; i++) {
         if (y1 % 2 == 0) {
@@ -105,13 +115,23 @@ bool is_neighbour(int x1, int y1, int x2, int y2) {
 }
 
 bool has_neighbour(int x, int y, enum Race race, Board *board) {
-    int odd[6][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 0}};
-    int even[6][2] = {{-1, -1}, {0, -1}, {1, 0}, {0, 1}, {-1, 1}, {-1, 0}};
+    int odd[6][2] = {{0,  -1},
+                     {1,  -1},
+                     {1,  0},
+                     {1,  1},
+                     {0,  1},
+                     {-1, 0}};
+    int even[6][2] = {{-1, -1},
+                      {0,  -1},
+                      {1,  0},
+                      {0,  1},
+                      {-1, 1},
+                      {-1, 0}};
 
     int X, Y;
 
     for (int i = 0; i < 6; i++) {
-        if(y % 2 == 0) {
+        if (y % 2 == 0) {
             X = x + even[i][0];
             Y = y + even[i][1];
         }
@@ -127,7 +147,8 @@ bool has_neighbour(int x, int y, enum Race race, Board *board) {
                 if (board->fields[X][Y].owner == 0) return true;
                 break;
             case ENEMY:
-                if (board->fields[X][Y].owner > 0 && board->fields[X][Y].owner != board->fields[x][y].owner) return true;
+                if (board->fields[X][Y].owner > 0 && board->fields[X][Y].owner != board->fields[x][y].owner)
+                    return true;
                 break;
             case ALLY:
                 if (board->fields[X][Y].owner == board->fields[x][y].owner) return true;
@@ -145,7 +166,7 @@ void update_field_info(SDL_Renderer *renderer, Board *board) {
     int w, h;
     SDL_GetRendererOutputSize(renderer, &w, &h);
 
-    board->field_size = (h - 100) / ((board->height + 0.25) * 1.5);
+    board->field_size = (int) ((h - 100) / ((board->height + 0.25) * 1.5));
     int width_control = (w - board->width * board->field_size * 2 - board->field_size);
 
     if (width_control < 10) {
@@ -153,9 +174,9 @@ void update_field_info(SDL_Renderer *renderer, Board *board) {
     }
 
     board->field_width = board->field_size * 2;
-    board->field_height = board->field_width * 0.75;
+    board->field_height = (int) (board->field_width * 0.75);
 
-    board->offset_x = (w - board->width * board->field_width - board->field_width * 0.5) * 0.5;
+    board->offset_x = (int) ((w - board->width * board->field_width - board->field_width * 0.5) * 0.5);
     board->offset_y = 25;
 
 }

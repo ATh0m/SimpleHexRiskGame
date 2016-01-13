@@ -7,8 +7,8 @@ Graphic *create_graphic(int width, int height) {
     new_graphic->window = create_window(width, height);
     new_graphic->renderer = create_renderer(new_graphic->window);
 
-    if (new_graphic == NULL || new_graphic->window == NULL || new_graphic->renderer == NULL) {
-        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+    if (new_graphic->window == NULL || new_graphic->renderer == NULL) {
+        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         exit(0);
     }
 
@@ -43,10 +43,8 @@ SDL_Window *create_window(int width, int height) {
             height,
             SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
-    //SDL_WINDOW_RESIZABLE
-
-    if( window == NULL ) {
-        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+    if (window == NULL) {
+        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         exit(0);
     }
 
@@ -94,13 +92,13 @@ void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y,
         exit(1);
     }
 
-    SDL_Surface* surface_message = TTF_RenderUTF8_Blended(font, text, sdl_color);
+    SDL_Surface *surface_message = TTF_RenderUTF8_Blended(font, text, sdl_color);
 
-    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surface_message);
+    SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surface_message);
 
     SDL_Rect Message_rect;
-    Message_rect.x = x - surface_message->w / 2.0;
-    Message_rect.y = y - surface_message->h / 2.0;
+    Message_rect.x = (int) (x - surface_message->w / 2.0);
+    Message_rect.y = (int) (y - surface_message->h / 2.0);
     Message_rect.w = surface_message->w;
     Message_rect.h = surface_message->h;
 
@@ -109,5 +107,11 @@ void display_text(SDL_Renderer *renderer, char *text, Color color, int x, int y,
     SDL_FreeSurface(surface_message);
     SDL_DestroyTexture(message);
 
+}
+
+void display_message(Graphic *graphic, char *text, Color color, int x, int y, TTF_Font *font) {
+    boxRGBA(graphic->renderer, 0, (Sint16) (y - 40), (Sint16) (graphic->width), (Sint16) (y + 40), 0, 0, 0, 170);
+
+    display_text(graphic->renderer, text, color, x, y, font);
 }
 

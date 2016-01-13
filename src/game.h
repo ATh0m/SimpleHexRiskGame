@@ -22,12 +22,19 @@ typedef struct Game {
 } Game;
 
 Game *create_game(Graphic *graphic);
+
 void delete_game(Game *game);
 
 void reset_game(Game *game);
 
 void draw_game(SDL_Renderer *renderer, Game *game);
 
-void next_turn(Game *game) ;
+void next_turn(Game *game);
+
+void display_player_instructions(Game *game, SDL_Renderer *renderer);
+
+void display_game_board(Game *game, SDL_Renderer *renderer);
+
+void display_splash_screen(Game *game, SDL_Renderer *renderer);
 
 #endif //SIMPLEHEXRISKGAME_GAME_H
