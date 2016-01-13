@@ -12,6 +12,8 @@ Graphic *create_graphic(int width, int height) {
         exit(0);
     }
 
+    SDL_SetWindowMinimumSize(new_graphic->window, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT);
+
     update_graphic_size(new_graphic);
 
     return new_graphic;

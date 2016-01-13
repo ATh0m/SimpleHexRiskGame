@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
 
-    Graphic *graphic = create_graphic(850, 475);
+    Graphic *graphic = create_graphic(WINDOW_WIDTH, WINDOW_HEIGHT);
     Game *game = create_game(graphic);
 
     int quit = false;
