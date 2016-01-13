@@ -70,15 +70,16 @@ bool ai_start(Player *player, Board *board) {
 void ai_reinforcement(Player *player, Board *board, enum State *state, PairStack *fields_adjacent_enemies, PairStack *fields_adjacent_neutrals) {
     Field *field;
 
-    if ((fields_adjacent_enemies->size > 0 && (rand() / (double) RAND_MAX) < 0.75) ||
-        fields_adjacent_neutrals->size == 0) {
-
+    if (fields_adjacent_enemies->size > 0 && ((rand() / (double) RAND_MAX) < 0.75 || fields_adjacent_neutrals->size == 0)) {
         field = random_field(fields_adjacent_enemies, board);
         player_reinforcement(player, field, state);
     }
-    else {
-
+    else if (fields_adjacent_neutrals->size > 0){
         field = random_field(fields_adjacent_neutrals, board);
+        player_reinforcement(player, field, state);
+    }
+    else {
+        field = random_field(player->fields_stack, board);
         player_reinforcement(player, field, state);
     }
 
@@ -108,7 +109,7 @@ bool ai_move(Player *player, Board *board, enum State *state, Players *players, 
     }
 
     if ((rand() / (double)RAND_MAX) < 0.75 || actionable_enemy_fields->size == 0) {
-        if ((actionable_enemy_fields->size > 0 && (rand() / (double)RAND_MAX) < 0.35) || actionable_neutral_fields->size == 0) {
+        if (actionable_enemy_fields->size > 0 && ((rand() / (double)RAND_MAX) < 0.35 || actionable_neutral_fields->size == 0)) {
             Triple actionable_enemy_fields_tab[actionable_enemy_fields->size];
 
             int index = 0;
@@ -129,18 +130,26 @@ bool ai_move(Player *player, Board *board, enum State *state, Players *players, 
                 field = pair_to_field(create_pair(actionable_enemy_fields_tab[index].x, actionable_enemy_fields_tab[index].y) ,board);
             }
         }
-        else {
+        else if (actionable_neutral_fields->size > 0){
             field = random_field(actionable_neutral_fields, board);
         }
+        else {
+            field = random_field(player->fields_stack, board);
+        }
+
         player_move(player, field, board, state, players);
     }
     else {
         if (fields_adjacent_enemies->size > 0) {
             field = random_field(fields_adjacent_enemies, board);
         }
-        else {
+        else if(fields_adjacent_neutrals->size > 0){
             field = random_field(fields_adjacent_neutrals, board);
         }
+        else {
+            field = random_field(player->fields_stack, board);
+        }
+
         player_move(player, field, board, state, players);
     }
 
