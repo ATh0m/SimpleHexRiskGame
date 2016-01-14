@@ -114,7 +114,7 @@ void display_player_instructions(Game *game, SDL_Renderer *renderer) {
             display_text(renderer, message, player->action_color, game->graphic->width / 2,
                          game->graphic->height - 45, font_default);
             if (!player->ai) {
-                display_text(renderer, "Wybierz dowolne, wolne pole jako twój startowy teren",
+                display_text(renderer, "Wybierz dowolne wolne pole jako twój startowy teren",
                              create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20,
                              font_small);
             }
@@ -125,7 +125,7 @@ void display_player_instructions(Game *game, SDL_Renderer *renderer) {
                          game->graphic->height - 45, font_default);
             if (!player->ai) {
                 display_text(renderer,
-                             "Wybierz swoje pole, które chcesz wzmocnić. Kliknięcie prawym przyciskiem dodaje całą, pozostałą siłę",
+                             "Wybierz swoje pole, które chcesz wzmocnić. Kliknięcie prawym przyciskiem dodaje wszystkie jednostki",
                              create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20,
                              font_small);
             }
@@ -135,7 +135,7 @@ void display_player_instructions(Game *game, SDL_Renderer *renderer) {
             display_text(renderer, message, player->action_color, game->graphic->width / 2,
                          game->graphic->height - 45, font_default);
             if (!player->ai) {
-                display_text(renderer, "Dołącz neutralne pole, zaatakuj wroga lub wzmocnij swój teren",
+                display_text(renderer, "Dołącz neutralne pole, zaatakuj przeciwnika lub wzmocnij swój teren",
                              create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20,
                              font_small);
             }
@@ -188,26 +188,28 @@ void display_splash_screen(Game *game, SDL_Renderer *renderer) {
     display_text(renderer, "SIMPLEHEXRISKGAME", create_color(128, 128, 128, 255), game->graphic->width / 2,
                  game->graphic->height / 2 - 130, font_header);
     display_text(renderer,
-                 "Jest to prosta gra strategiczna podobna do Ryzyko. Twoim celem jest wyeliminowanie pozostałych wrogów.",
+                 "Jest to prosta gra strategiczna na podstawie gry Ryzyko. Twoim celem jest wyeliminowanie przeciwnych graczy.",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 70,
                  font_small);
-    display_text(renderer, "Przejmuj neutralne i wrogie tereny, aby zwiększac swoją siłę",
+    display_text(renderer,
+                 "Przejmuj neutralne i wrogie tereny, aby powiększać swoje wojska",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 50,
                  font_small);
     display_text(renderer,
-                 "Kiedy przejmiesz pusty teren jego siła będzie wynosiła połowę siły sąsiednich, przyjaznych terenów.",
+                 "Po przejęciu pustego pola, jego wartość będzie równa średniej wartości sąsiadów",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 30,
                  font_small);
-    display_text(renderer, "Kiedy atakujesz, wykorzystujesz w bitwie połowę siły sąsiednich, przyjaznych pól.",
+    display_text(renderer,
+                 "Kiedy atakujesz worgie pole siła ataku wynosi połowę siły sąsiadujących przyjaciół",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 - 10,
                  font_small);
-    display_text(renderer, "Mapa, jak i kolejność, jest losowo-randomizowana.",
+    display_text(renderer, "Mapa i kolejność rozgrywki jest losowa",
                  create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height / 2 + 10,
                  font_small);
 
     display_text(renderer, "Wybierz liczbę graczy, którzy wezmą udział w potyczce.", create_color(128, 128, 128, 255),
                  game->graphic->width / 2, game->graphic->height / 2 + 50, font_small);
-    display_text(renderer, "Nad resztą kontrolę przejmie komputer.", create_color(128, 128, 128, 255),
+    display_text(renderer, "Nad resztą kontrolę przejmie komputer. Powodzenia!", create_color(128, 128, 128, 255),
                  game->graphic->width / 2, game->graphic->height / 2 + 70, font_small);
 
     display_text(renderer, "0", create_color(128, 128, 128, 255), game->graphic->width / 2 - 150,
