@@ -135,7 +135,7 @@ void display_player_instructions(Game *game, SDL_Renderer *renderer) {
             display_text(renderer, message, player->action_color, game->graphic->width / 2,
                          game->graphic->height - 45, font_default);
             if (!player->ai) {
-                display_text(renderer, "Dołącz neutralne pole, zaatakuj przeciwnika lub wzmocnij swój teren",
+                display_text(renderer, "Dołącz neutralne pole, zaatakuj przeciwnika lub wzmocnij swój teren 2 jednostkami",
                              create_color(128, 128, 128, 255), game->graphic->width / 2, game->graphic->height - 20,
                              font_small);
             }
