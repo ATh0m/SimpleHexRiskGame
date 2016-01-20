@@ -6,9 +6,57 @@
 
 Jest to prosta gra strategiczna opierająca się na zasadach gry ***"Ryzyko"*** i planszą złożoną z sześcioboków. Graczami mogą być ludzie jak i komputer.
 
-![Wstępna wersja](https://raw.githubusercontent.com/AThom0x7cc/SimpleHexRiskGame/master/screen.png)
+---
+
+## SCREENY:
+
+![Wstępna wersja](https://raw.githubusercontent.com/AThom0x7cc/SimpleHexRiskGame/master/screens/screen.png)
+
+![Wstępna wersja](https://raw.githubusercontent.com/AThom0x7cc/SimpleHexRiskGame/master/screens/screen2.png)
+
+![Wstępna wersja](https://raw.githubusercontent.com/AThom0x7cc/SimpleHexRiskGame/master/screens/screen3.png)
 
 ------
+
+## INSTALACJA:
+
+Wymaga [cmake](cmake.org)
+
+### OS X:
+
+Przydatny [Homebrew](http://brew.sh)
+
+``` shell
+brew install sdl2 sdl2_gfx sdl2_ttf
+mkdir build
+cd build
+cmake ..
+make
+```
+
+### Ubuntu:
+
+``` shell
+apt-get install libsdl2-dev libsdl2-gfx-dev libsdl2-ttf-dev
+mkdir build
+cd build
+cmake ..
+make
+```
+
+### Arch:
+
+``` shell
+pacman -S sdl2 sdl2_gfx sdl2_ttf
+mkdir build
+cd build
+cmake ..
+make
+```
+
+
+
+---
 
 ## ZASADY:
 
@@ -83,29 +131,31 @@ Gra będzie wykorzystywać bibliotekę [SDL2](https://www.libsdl.org/index.php).
 
 ## PROBLEMY DO IMPLEMENTACJI
 
-- rysowanie planszy
-- rozpoznawanie kliknietego pola
-- wyświetlanie napisów
-- zaznaczanie pól z możliwymi akcjami
-- podświetlanie pól
-- rozpoznawanie akcji użytkownika
-- zarządzanie turami
-- sztuczna inteligencja
-- i wiele, wiele więcej
+- [x] rysowanie planszy
+- [x] rozpoznawanie kliknietego pola
+- [x] wyświetlanie napisów
+- [x] zaznaczanie pól z możliwymi akcjami
+- [x] podświetlanie pól
+- [x] rozpoznawanie akcji użytkownika
+- [x] zarządzanie turami
+- [x] sztuczna inteligencja
+- [x] i wiele, wiele więcej
 
 ------
 
 ## STRUKTURA PROGRAMU
 
-- ai.c / ai.h
-- board.c / board.h
-- defs.h
-- game.c / game.h
-- graphic.c / graphic.h
-- input.c / input.h
-- main.c / main.h
-- player.c / player.h
-- utility.c / utility.h
+- ai.c / ai.h - zarządzanie ruchami SI
+- battle.c / battle.h - symulacja bitwy
+- board.c / board.h - zarządzanie planszą
+- defs.h - domyślne ustawienia
+- game.c / game.h - główne zarządzanie rozgrywką
+- generator.c / generator.h - generator planszy
+- graphic.c / graphic.h - renderowanie obiektów
+- input.c / input.h - zarządzanie zdarzeniami
+- main.c / main.h - główna funkcja
+- player.c / player.h - zarządzanie ruchami gracza
+- utility.c / utility.h - pomocne funkcje, struktury
 
 ------
 
@@ -113,6 +163,7 @@ Gra będzie wykorzystywać bibliotekę [SDL2](https://www.libsdl.org/index.php).
 
 - SDL2
 - SDL2_gfx
+- SDL2_ttf
 - inne (stdlib.h, stdbool.h, string.h, …)
 
 ------
@@ -123,19 +174,8 @@ Gra będzie wykorzystywać bibliotekę [SDL2](https://www.libsdl.org/index.php).
 - [http://lazyfoo.net/tutorials/SDL/](http://lazyfoo.net/tutorials/SDL/) - tutorial SDL2
 - [https://wiki.libsdl.org/FrontPage](https://wiki.libsdl.org/FrontPage) - dokumentacja SDL2
 - [http://www.ferzkopp.net/Software/SDL2_gfx/Docs/html/index.html](http://www.ferzkopp.net/Software/SDL2_gfx/Docs/html/index.html) - dokumentacja SDL2_gfx
-
-
-
-
-
-
-
-
-
-
-
-
+- [https://www.libsdl.org/projects/SDL_ttf/](https://www.libsdl.org/projects/SDL_ttf/) - dokumentacja SDL2_ttf
 
 ------
-Tomasz Nanowski
 
+Tomasz Nanowski II Uwr

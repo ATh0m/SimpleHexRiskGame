@@ -76,7 +76,7 @@ void draw_hex(SDL_Renderer *renderer, int x, int y, int size, Color color) {
     short last_y = vy[5];
 
     for (int i = 0; i < 6; i++) {
-        thickLineRGBA(renderer, last_x, last_y, vx[i], vy[i], 3, color.r, color.g, color.b, color.a);
+        thickLineRGBA(renderer, last_x, last_y, vx[i], vy[i], 4, color.r, color.g, color.b, color.a);
 
         last_x = vx[i];
         last_y = vy[i];
