@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 project(SimpleHexRiskGame)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_RELEASE} -I/usr/local/include/SDL2 -D_THREAD_SAFE -std=c99 -Wall -Werror")
-set(CMAKE_EXE_LINKER_FLAGS "-L/usr/local/lib -lSDL2 -lSDL2_gfx -lSDL2_ttf -lm")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_RELEASE} -std=c99")
 
 set(SOURCE_FILES
     src/board.c
@@ -21,3 +20,4 @@ set(SOURCE_FILES
     src/utility.h src/game.c src/game.h src/battle.c src/battle.h src/ai.c src/ai.h src/generator.c src/generator.h)
 
 add_executable(SimpleHexRiskGame ${SOURCE_FILES})
+target_link_libraries(SimpleHexRiskGame -lSDL2 -lSDL2_gfx -lSDL2_ttf -lm)

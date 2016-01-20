@@ -150,14 +150,9 @@ bool player_move(Player *player, Field *field, Board *board, enum State *state, 
             if (opponent->fields_stack->size <= 0) {
                 opponent->active = false;
 
-                int won = true;
-                for (int i = 0; i < players->players_size; i++) {
-                    if (i != players->active_player_index && players->list[i]->active == true) {
-                        won = false;
-                    }
-                }
+                players->active_players_amount--;
 
-                if (won) {
+                if (players->active_players_amount == 1) {
                     *state = WIN;
                 }
             }
